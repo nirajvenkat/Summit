@@ -1,0 +1,28 @@
+SummitGame/*.class
+
+# Mobile Tools for Java (J2ME)
+SummitGame/.mtj.tmp/
+
+# Package Files #
+SummitGame/*.jar
+SummitGame/*.war
+SummitGame/*.ear
+
+# Eclipse project files
+SummitGame/.classpath
+SummitGame/.project
+SummitGame/*.pydevproject
+SummitGame/.metadata
+SummitGame/.gradle
+SummitGame/bin/
+SummitGame/tmp/
+SummitGame/*.tmp
+SummitGame/*.bak
+SummitGame/*.swp
+SummitGame/*~.nib
+SummitGame/local.properties
+SummitGame/.settings/
+SummitGame/.loadpath
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+SummitGame/hs_err_pid**.class
