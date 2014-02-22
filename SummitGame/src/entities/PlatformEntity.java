@@ -1,6 +1,15 @@
 package entities;
 
 import java.awt.Rectangle;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class PlatformEntity implements Entity {
 	
@@ -16,14 +25,26 @@ public class PlatformEntity implements Entity {
 
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
-
+		
+		Texture platTexture = loadTexture("res/stone.png");
+		platTexture.bind();
+		
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex2d(x, y);
+			glTexCoord2f(0, 1);
+			glVertex2d(x + width, y);
+			glTexCoord2f(1, 1);
+			glVertex2d(x + width, y + height);
+			glTexCoord2f(1, 0);
+			glVertex2d(x, y + height);
+		glEnd();
+		
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		//Platforms dont move... for now
 	}
 
 	@Override
@@ -76,6 +97,21 @@ public class PlatformEntity implements Entity {
 	public boolean intersects(Entity other) {
 		hitbox.setBounds((int) x, (int) y, (int) width, (int) height);
 		return hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
+	}
+	
+	private Texture loadTexture(String textureFilename){
+		try {
+			Texture texture = TextureLoader.getTexture("PNG", new FileInputStream(textureFilename));
+			return texture;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }
