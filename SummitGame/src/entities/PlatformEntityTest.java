@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PlatformEntityTest {
@@ -12,7 +11,7 @@ public class PlatformEntityTest {
 
 	@Before
 	public void setUp() throws Exception {
-		p1 = new PlatformEntity(20,20,5,5);
+		p1 = new PlatformEntity(20,20);
 	}
 
 	@After
@@ -73,7 +72,31 @@ public class PlatformEntityTest {
 	
 	@Test
 	public void testIntersects() {
-		p2 = new PlatformEntity(22,22,5,5);
+		p2 = new PlatformEntity(22,22);
+		assertTrue(p1.intersects(p2));
+	}
+	
+	@Test
+	public void testIntersectsTop() {
+		p2 = new PlatformEntity(20,10);
+		assertTrue(p1.intersects(p2));
+	}
+	
+	@Test
+	public void testIntersectsRight() {
+		p2 = new PlatformEntity(220,20);
+		assertTrue(p1.intersects(p2));
+	}
+	
+	@Test
+	public void testIntersectsBottom() {
+		p2 = new PlatformEntity(20,30);
+		assertTrue(p1.intersects(p2));
+	}
+	
+	@Test
+	public void testIntersectsLeft() {
+		p2 = new PlatformEntity(-180,20);
 		assertTrue(p1.intersects(p2));
 	}
 
