@@ -30,12 +30,12 @@ public class PlatformEntityTest {
 
 	@Test
 	public void testGetWidth() {
-		assertEquals(5,p1.getWidth(),0.01);
+		assertEquals(200,p1.getWidth(),0.01);
 	}
 
 	@Test
 	public void testGetHeight() {
-		assertEquals(5,p1.getHeight(),0.01);
+		assertEquals(10,p1.getHeight(),0.01);
 	}
 
 	@Test
@@ -79,25 +79,25 @@ public class PlatformEntityTest {
 	@Test
 	public void testIntersectsTop() {
 		p2 = new PlatformEntity(20,10);
-		assertTrue(p1.intersects(p2));
+		assertFalse(p1.intersects(p2));
 	}
 	
 	@Test
 	public void testIntersectsRight() {
 		p2 = new PlatformEntity(220,20);
-		assertTrue(p1.intersects(p2));
+		assertFalse(p1.intersects(p2));
 	}
 	
 	@Test
 	public void testIntersectsBottom() {
 		p2 = new PlatformEntity(20,30);
-		assertTrue(p1.intersects(p2));
+		assertFalse(p1.intersects(p2));
 	}
 	
 	@Test
 	public void testIntersectsLeft() {
 		p2 = new PlatformEntity(-180,20);
-		assertTrue(p1.intersects(p2));
+		assertFalse(p1.intersects(p2));
 	}
 
 }

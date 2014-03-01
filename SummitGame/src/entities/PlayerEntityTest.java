@@ -30,12 +30,12 @@ public class PlayerEntityTest {
 
 	@Test
 	public void testGetWidth() {
-		assertEquals(5,p1.getWidth(),0.01);
+		assertEquals(10,p1.getWidth(),0.01);
 	}
 
 	@Test
 	public void testGetHeight() {
-		assertEquals(5,p1.getHeight(),0.01);
+		assertEquals(20,p1.getHeight(),0.01);
 	}
 
 	@Test
@@ -79,25 +79,25 @@ public class PlayerEntityTest {
 	@Test
 	public void testIntersectsTop() {
 		p2 = new PlayerEntity(20,0);
-		assertTrue(p1.intersects(p2));
+		assertFalse(p1.intersects(p2));
 	}
 	
 	@Test
 	public void testIntersectsRight() {
 		p2 = new PlayerEntity(30,20);
-		assertTrue(p1.intersects(p2));
+		assertFalse(p1.intersects(p2));
 	}
 	
 	@Test
 	public void testIntersectsBottom() {
 		p2 = new PlayerEntity(20,40);
-		assertTrue(p1.intersects(p2));
+		assertFalse(p1.intersects(p2));
 	}
 	
 	@Test
 	public void testIntersectsLeft() {
 		p2 = new PlayerEntity(10,20);
-		assertTrue(p1.intersects(p2));
+		assertFalse(p1.intersects(p2));
 	}
 
 }
