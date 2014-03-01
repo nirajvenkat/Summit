@@ -1,32 +1,35 @@
 package entities;
 
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glVertex2d;
+import game.WorldBuilder;
+
 import java.awt.Rectangle;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-
-
-import static org.lwjgl.opengl.GL11.*;
 
 public class PlatformEntity implements Entity {
 	
 	protected double x, y, width, height;
 	protected Rectangle hitbox = new Rectangle();
+	protected enum platformType {
+		FIXED, MOVING, STICKY, LAVA
+	}
 	
-	public PlatformEntity(double x, double y, double width, double height) {
+	public PlatformEntity(double x, double y) {
 		this.x = x;
 		this.y = y;
-		this.width = width;
-		this.height = height;
+		this.width = 200;
+		this.height = 10;
 	}
 
 	@Override
 	public void draw() {
 		
-		Texture platTexture = loadTexture("res/stone.png");
+		Texture platTexture = WorldBuilder.loadTexture("res/stone.png");
 		platTexture.bind();
 		
 		glBegin(GL_QUADS);
@@ -45,6 +48,7 @@ public class PlatformEntity implements Entity {
 	@Override
 	public void update() {
 		//Platforms dont move... for now
+		
 	}
 
 	@Override
@@ -99,19 +103,5 @@ public class PlatformEntity implements Entity {
 		return hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
 	}
 	
-	private Texture loadTexture(String textureFilename){
-		try {
-			Texture texture = TextureLoader.getTexture("PNG", new FileInputStream(textureFilename));
-			return texture;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
 
 }

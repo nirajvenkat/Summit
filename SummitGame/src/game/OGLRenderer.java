@@ -1,9 +1,19 @@
+package game;
+
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glVertex2d;
+
+import java.util.ArrayList;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.opengl.Texture;
 
 import entities.PlatformEntity;
 
@@ -23,6 +33,8 @@ public class OGLRenderer {
 	public static int SCREEN_WIDTH = 1024;
 	public static int SCREEN_HEIGHT = 768;
 
+	//Platform List
+	private static ArrayList<PlatformEntity> platforms;
 
 	public void start() {
 		try {
@@ -36,6 +48,9 @@ public class OGLRenderer {
 		initGL(); // init OpenGL
 		getDelta(); // call once before loop to initialise lastFrame
 		lastFPS = getTime(); // call before loop to initialise fps timer
+
+		//Build world
+		platforms = WorldBuilder.build();
 
 		while (!Display.isCloseRequested()) {
 			int delta = getDelta();
@@ -190,23 +205,40 @@ public class OGLRenderer {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
 		// R,G,B,A Set The Color To Blue One Time Only
-//		GL11.glColor3f(0.5f, 0.5f, 1.0f);
+		//		GL11.glColor3f(0.5f, 0.5f, 1.0f);
+
+		//Background texture
+		Texture bgtex = WorldBuilder.loadTexture("res/puck.png");
+		bgtex.bind();
+
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex2d(0, 0);
+			glTexCoord2f(0, 1);
+			glVertex2d(SCREEN_WIDTH, 0);
+			glTexCoord2f(1, 1);
+			glVertex2d(SCREEN_WIDTH, SCREEN_HEIGHT);
+			glTexCoord2f(1, 0);
+			glVertex2d(0, SCREEN_HEIGHT);
+		glEnd();
 
 		// draw quad
-		PlatformEntity plat = new PlatformEntity((double) 300,(double) 300,(double) 400,(double) 400);
-		plat.draw();
-//		GL11.glPushMatrix();
-//		GL11.glTranslatef(x, y, 0);
-//		GL11.glRotatef(rotation, 0f, 0f, 1f);
-//		GL11.glTranslatef(-x, -y, 0);
-//
-//		GL11.glBegin(GL11.GL_QUADS);
-//		GL11.glVertex2f(x - 50, y - 50);
-//		GL11.glVertex2f(x + 50, y - 50);
-//		GL11.glVertex2f(x + 50, y + 50);
-//		GL11.glVertex2f(x - 50, y + 50);
-//		GL11.glEnd();
-//		GL11.glPopMatrix();
+		for(PlatformEntity plat : platforms){
+			plat.draw();
+		}
+
+		//		GL11.glPushMatrix();
+		//		GL11.glTranslatef(x, y, 0);
+		//		GL11.glRotatef(rotation, 0f, 0f, 1f);
+		//		GL11.glTranslatef(-x, -y, 0);
+		//
+		//		GL11.glBegin(GL11.GL_QUADS);
+		//		GL11.glVertex2f(x - 50, y - 50);
+		//		GL11.glVertex2f(x + 50, y - 50);
+		//		GL11.glVertex2f(x + 50, y + 50);
+		//		GL11.glVertex2f(x - 50, y + 50);
+		//		GL11.glEnd();
+		//		GL11.glPopMatrix();
 	}
 
 	public static void main(String[] argv) {
