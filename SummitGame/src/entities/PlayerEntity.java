@@ -7,8 +7,6 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2d;
 import game.WorldBuilder;
 
-import org.lwjgl.Sys;
-
 import java.awt.Rectangle;
 
 import org.newdawn.slick.opengl.Texture;
@@ -43,13 +41,8 @@ public class PlayerEntity implements Entity {
 	}
 
 	@Override
-	public void update(int delta) {
-		// TODO Get keyboard input working for the player
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.35f * delta;
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.35f * delta;
-		 
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y += 0.35f * delta;
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y -= 0.35f * delta;
+	public void update() {
+		// TODO Auto-generated method stub
 
 	}
 
@@ -103,6 +96,37 @@ public class PlayerEntity implements Entity {
 	public boolean intersects(Entity other) {
 		hitbox.setBounds((int) x, (int) y, (int) width, (int) height);
 		return hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
+	}
+	
+	@Override
+	public double intersectsX(Entity other){
+		//check if player is inbetween other
+		if(other.getX() < x && (other.getX()+other.getWidth()) > (x+width)){
+			return x;
+		}
+		//check if player is approaching from left
+		if(other.getX() < (x+width) && other.getX() > x){
+			return (other.getX() - width);
+		}
+		//check if player is approaching from right
+		if((other.getX()+other.getWidth()) > x){
+			return (other.getX() + other.getWidth());
+		}
+		return x;
+	}
+	
+	@Override
+	public double intersectsY(Entity other){
+		if(other.getY() < y && (other.getY()+other.getHeight()) > (y+height)){
+			return y;
+		}
+		if(other.getY() < (y+height) && other.getY() > y){
+			return (other.getY() - height);
+		}
+		if((other.getY()+other.getHeight()) > y){
+			return (other.getY() + other.getHeight());
+		}
+		return y;
 	}
 
 }

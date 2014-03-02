@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -70,15 +71,15 @@ public class OGLRenderer {
 	}
 
 	public void update(int delta) {
-		player.update(delta);
 		// rotate quad
 		//		rotation += 0.15f * delta;
-		// 
-		//		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.35f * delta;
-		//		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.35f * delta;
-		// 
-		//		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y += 0.35f * delta;
-		//		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y -= 0.35f * delta;
+		double x = player.getX();
+		double y = player.getY();
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.05f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.05f * delta;
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y += 0.05f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y -= 0.05f * delta;
 
 		//		while (Keyboard.next()) {
 		//		    if (Keyboard.getEventKeyState()) {
@@ -92,13 +93,35 @@ public class OGLRenderer {
 		//		    }
 		//		}
 
-		// keep quad on the screen
-		//		if (x < 0) x = 0;
-		//		if (x > SCREEN_WIDTH) x = SCREEN_WIDTH;
-		//		if (y < 0) y = 0;
-		//		if (y > SCREEN_HEIGHT) y = SCREEN_HEIGHT;
+		// keep player on the screen
+		if (x < 0) x = 0;
+		if (x > SCREEN_WIDTH) x = SCREEN_WIDTH;
+		if (y < 0) y = 0;
+		if (y > SCREEN_HEIGHT) y = SCREEN_HEIGHT;
+		
+		player.setLocation(x, y);
+		//collision detection between player and platforms
+		for(PlatformEntity plat : platforms){
+			if(player.intersects(plat)){
+				if(player.intersectsX(plat) != x){
+					x = player.intersectsX(plat);
+					player.setX(x);
+					if(player.intersects(plat)){
+						if(player.intersectsY(plat) != y){
+							y = player.intersectsY(plat);
+							player.setY(y);
+						}
+					}
+				}else{
+					if(player.intersectsY(plat) != y){
+						y = player.intersectsY(plat);
+						player.setY(y);
+					}
+				}
+			}
+		}
 
-		//updateFPS(); // update FPS Counter
+		updateFPS(); // update FPS Counter
 	}
 
 	/**

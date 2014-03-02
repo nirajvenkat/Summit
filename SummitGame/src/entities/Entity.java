@@ -13,4 +13,6 @@ public interface Entity {
 	public double getWidth();
 	public double getHeight();
 	public boolean intersects(Entity other);
+	public double intersectsX(Entity other);
+	public double intersectsY(Entity other);
 }

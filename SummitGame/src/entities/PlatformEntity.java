@@ -103,5 +103,14 @@ public class PlatformEntity implements Entity {
 		return hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
 	}
 	
+	@Override
+	public double intersectsX(Entity other) {
+		return 0;
+	}
+	
+	@Override
+	public double intersectsY(Entity other) {
+		return 0;
+	}
 
 }
