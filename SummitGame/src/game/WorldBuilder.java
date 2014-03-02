@@ -28,9 +28,32 @@ public class WorldBuilder {
 			for(i = 75; i < OGLRenderer.SCREEN_HEIGHT; i+=75){
 				Random generator = new Random();
 				PlatformEntity plat = new PlatformEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH), i);
-				platforms.add(plat);
-			}
-		}
+				if(!platforms.isEmpty()){
+					System.out.print("not empty\n");
+					PlatformEntity newp = new PlatformEntity(0,0);
+					PlatformEntity oldp = new PlatformEntity(0,0);
+					double newX, newWidth;
+					for(PlatformEntity p : platforms){
+						if(p.intersects(plat)){
+							if(p.getX() < plat.getX()){
+								newX = p.getX();
+								newWidth = (plat.getX()+plat.getWidth())-p.getX();
+							}else{
+								newX = plat.getX();
+								newWidth = (p.getX()+p.getWidth())-plat.getX();
+							}
+							newp = new PlatformEntity(newX, p.getY());
+							newp.setWidth(newWidth);
+							oldp = p;
+						}//endif
+					}//endfor
+					platforms.remove(oldp);
+					platforms.add(newp);
+				}else{
+					platforms.add(plat);
+				}//endif
+			}//endfori
+		}//enforj
 		
 		return platforms;
 	}

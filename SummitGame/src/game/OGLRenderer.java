@@ -35,6 +35,7 @@ public class OGLRenderer {
 	private static ArrayList<PlatformEntity> platforms;
 	//Player
 	private static PlayerEntity player;
+	private static int winner;
 
 	public void start() {
 		try {
@@ -52,6 +53,7 @@ public class OGLRenderer {
 		//Build world
 		platforms = WorldBuilder.build();
 		player = new PlayerEntity(SCREEN_WIDTH/4,10);
+		winner = 0;
 
 		while (!Display.isCloseRequested()) {
 			int delta = getDelta();
@@ -68,6 +70,7 @@ public class OGLRenderer {
 	public void update(int delta) {
 		// rotate quad
 		//		rotation += 0.15f * delta;
+		//TODO get two players working
 		double x = player.getX();
 		double y = player.getY();
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.2f * delta;
@@ -112,19 +115,19 @@ public class OGLRenderer {
 		//collision detection between player and platforms
 		for(PlatformEntity plat : platforms){
 			if(player.intersects(plat)){
-				if(player.intersectsX(plat) != x){
-					x = player.intersectsX(plat);
-					player.setX(x);
+				if(player.intersectsY(plat) != y){
+					y = player.intersectsY(plat);
+					player.setY(y);
 					if(player.intersects(plat)){
-						if(player.intersectsY(plat) != y){
-							y = player.intersectsY(plat);
-							player.setY(y);
+						if(player.intersectsX(plat) != x){
+							x = player.intersectsX(plat);
+							player.setX(x);
 						}
 					}
 				}else{
-					if(player.intersectsY(plat) != y){
-						y = player.intersectsY(plat);
-						player.setY(y);
+					if(player.intersectsX(plat) != x){
+						y = player.intersectsX(plat);
+						player.setX(x);
 					}
 				}
 			}
@@ -134,7 +137,11 @@ public class OGLRenderer {
 		if (x < 0) x = 0;
 		if ((x+player.getWidth()) > SCREEN_WIDTH) x = (SCREEN_WIDTH-player.getWidth());
 		if (y < 0) y = 10;
-		if ((y+player.getHeight()) > SCREEN_HEIGHT) y = (SCREEN_HEIGHT-player.getHeight());
+		
+		//TODO determine who won and display that
+		if ((y+player.getHeight()) > SCREEN_HEIGHT){
+			System.out.print("You win\n");
+		}
 		player.setLocation(x, y);
 
 		updateFPS(); // update FPS Counter
