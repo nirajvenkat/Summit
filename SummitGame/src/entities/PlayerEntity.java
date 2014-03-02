@@ -11,14 +11,37 @@ import org.newdawn.slick.opengl.Texture;
 
 public class PlayerEntity implements Entity {
 
-	protected double x, y, width, height;
+	protected double x, y, width, height, vvel;
 	protected Rectangle hitbox = new Rectangle();
+	protected boolean jumping;
 	
 	public PlayerEntity(double x, double y) {
 		this.x = x;
 		this.y = y;
 		this.width = 10;
 		this.height = 20;
+	}
+	
+	public void jump(){
+		jumping = true;
+		vvel = 3.0f;
+	}
+	
+	public void land(){
+		vvel = 0;
+		jumping = false;
+	}
+	
+	public boolean isJumping(){
+		return jumping;
+	}
+	
+	public double getVvel(){
+		return vvel;
+	}
+	
+	public void setVvel(double newvel){
+		vvel = newvel;
 	}
 	
 	@Override
@@ -149,6 +172,7 @@ public class PlayerEntity implements Entity {
 			return (other.getY() - height);
 		}
 		if((other.getY()+other.getHeight()) > y){
+			this.land();
 			return (other.getY() + other.getHeight());
 		}
 		return y;
