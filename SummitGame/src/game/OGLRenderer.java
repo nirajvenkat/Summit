@@ -54,9 +54,8 @@ public class OGLRenderer {
 		player = new PlayerEntity(SCREEN_WIDTH/4,10);
 
 		while (!Display.isCloseRequested()) {
-			//			int delta = getDelta();
-			//
-			//			update(delta);
+			int delta = getDelta();
+			update(delta);
 			renderGL();
 
 			Display.update();
@@ -71,11 +70,11 @@ public class OGLRenderer {
 		//		rotation += 0.15f * delta;
 		double x = player.getX();
 		double y = player.getY();
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.05f * delta;
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.05f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.2f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.2f * delta;
 		
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y += 0.05f * delta;
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y -= 0.05f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y += 0.2f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y -= 0.2f * delta;
 
 		//		while (Keyboard.next()) {
 		//		    if (Keyboard.getEventKeyState()) {
@@ -89,12 +88,6 @@ public class OGLRenderer {
 		//		    }
 		//		}
 
-		// keep player on the screen
-		if (x < 0) x = 0;
-		if (x > SCREEN_WIDTH) x = SCREEN_WIDTH;
-		if (y < 0) y = 0;
-		if (y > SCREEN_HEIGHT) y = SCREEN_HEIGHT;
-		
 		player.setLocation(x, y);
 		//collision detection between player and platforms
 		for(PlatformEntity plat : platforms){
@@ -116,6 +109,13 @@ public class OGLRenderer {
 				}
 			}
 		}
+		
+		// keep player on the screen
+		if (x < 0) x = 0;
+		if ((x+player.getWidth()) > SCREEN_WIDTH) x = (SCREEN_WIDTH-player.getWidth());
+		if (y < 0) y = 10;
+		if ((y+player.getHeight()) > SCREEN_HEIGHT) y = (SCREEN_HEIGHT-player.getHeight());
+		player.setLocation(x, y);
 
 		updateFPS(); // update FPS Counter
 	}
