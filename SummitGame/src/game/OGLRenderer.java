@@ -16,6 +16,7 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 
 import entities.PlatformEntity;
+import entities.PlayerEntity;
 
 public class OGLRenderer {
 
@@ -35,10 +36,12 @@ public class OGLRenderer {
 
 	//Platform List
 	private static ArrayList<PlatformEntity> platforms;
+	//Player
+	private static PlayerEntity player;
 
 	public void start() {
 		try {
-			setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, !Display.isFullscreen());
+			setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, false);
 			Display.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -51,6 +54,7 @@ public class OGLRenderer {
 
 		//Build world
 		platforms = WorldBuilder.build();
+		player = new PlayerEntity(SCREEN_WIDTH/4,10);
 
 		while (!Display.isCloseRequested()) {
 			int delta = getDelta();
@@ -66,6 +70,7 @@ public class OGLRenderer {
 	}
 
 	public void update(int delta) {
+		player.update(delta);
 		// rotate quad
 		//		rotation += 0.15f * delta;
 		// 
@@ -226,6 +231,9 @@ public class OGLRenderer {
 		for(PlatformEntity plat : platforms){
 			plat.draw();
 		}
+		
+		//draw player
+		player.draw();
 
 		//		GL11.glPushMatrix();
 		//		GL11.glTranslatef(x, y, 0);

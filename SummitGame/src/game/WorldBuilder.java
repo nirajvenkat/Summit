@@ -18,11 +18,18 @@ public class WorldBuilder {
 	public static ArrayList<PlatformEntity> build(){
 		
 		ArrayList<PlatformEntity> platforms = new ArrayList<PlatformEntity>();
-		
-		for(double i = 0; i < OGLRenderer.SCREEN_HEIGHT; i+=100){
-			Random generator = new Random();
-			PlatformEntity plat = new PlatformEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH), i);
+		double i, j;
+		for(i = 0; i < OGLRenderer.SCREEN_WIDTH; i+=200){
+			PlatformEntity plat = new PlatformEntity(i, 0);
 			platforms.add(plat);
+		}
+		
+		for(j = 0; j < OGLRenderer.SCREEN_WIDTH; j+=OGLRenderer.SCREEN_WIDTH/3) {
+			for(i = 50; i < OGLRenderer.SCREEN_HEIGHT; i+=50){
+				Random generator = new Random();
+				PlatformEntity plat = new PlatformEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH), i);
+				platforms.add(plat);
+			}
 		}
 		
 		return platforms;
