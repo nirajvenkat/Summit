@@ -1,10 +1,7 @@
 package entities;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex2d;
+import static org.lwjgl.opengl.GL11.*;
+
 import game.WorldBuilder;
 
 import java.awt.Rectangle;
@@ -15,9 +12,9 @@ public class PlatformEntity implements Entity {
 	
 	protected double x, y, width, height;
 	protected Rectangle hitbox = new Rectangle();
-	protected enum platformType {
-		FIXED, MOVING, STICKY, LAVA
-	}
+//	protected enum platformType {
+//		FIXED, MOVING, STICKY, LAVA
+//	}
 	
 	public PlatformEntity(double x, double y) {
 		this.x = x;
@@ -29,17 +26,28 @@ public class PlatformEntity implements Entity {
 	@Override
 	public void draw() {
 		
-		Texture platTexture = WorldBuilder.loadTexture("res/stone.png");
-		platTexture.bind();
+//		Texture platTexture = WorldBuilder.loadTexture("res/stone.png");
+//		platTexture.bind();
+//		
+//		glBegin(GL_QUADS);
+//			glTexCoord2f(0, 0);
+//			glVertex2d(x, y);
+//			glTexCoord2f(0, 1);
+//			glVertex2d(x + width, y);
+//			glTexCoord2f(1, 1);
+//			glVertex2d(x + width, y + height);
+//			glTexCoord2f(1, 0);
+//			glVertex2d(x, y + height);
+//		glEnd();
 		
 		glBegin(GL_QUADS);
-			glTexCoord2f(0, 0);
+			glColor3d(0, 0, 0);
 			glVertex2d(x, y);
-			glTexCoord2f(0, 1);
+			glColor3d(0, 0, 0);
 			glVertex2d(x + width, y);
-			glTexCoord2f(1, 1);
+			glColor3d(0, 0, 0);
 			glVertex2d(x + width, y + height);
-			glTexCoord2f(1, 0);
+			glColor3d(0, 0, 0);
 			glVertex2d(x, y + height);
 		glEnd();
 		

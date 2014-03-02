@@ -1,10 +1,6 @@
 package game;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex2d;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 
@@ -21,7 +17,7 @@ import entities.PlayerEntity;
 public class OGLRenderer {
 
 	/** time at last frame */
-	long lastFrame;
+	static long lastFrame;
 
 	/** frames per second */
 	int fps;
@@ -41,7 +37,7 @@ public class OGLRenderer {
 
 	public void start() {
 		try {
-			setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, false);
+			setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, true);
 			Display.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -57,9 +53,9 @@ public class OGLRenderer {
 		player = new PlayerEntity(SCREEN_WIDTH/4,10);
 
 		while (!Display.isCloseRequested()) {
-			int delta = getDelta();
-
-			update(delta);
+			//			int delta = getDelta();
+			//
+			//			update(delta);
 			renderGL();
 
 			Display.update();
@@ -69,37 +65,37 @@ public class OGLRenderer {
 		Display.destroy();
 	}
 
-	public void update(int delta) {
-		player.update(delta);
-		// rotate quad
-		//		rotation += 0.15f * delta;
-		// 
-		//		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.35f * delta;
-		//		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.35f * delta;
-		// 
-		//		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y += 0.35f * delta;
-		//		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y -= 0.35f * delta;
-
-		//		while (Keyboard.next()) {
-		//		    if (Keyboard.getEventKeyState()) {
-		//		        if (Keyboard.getEventKey() == Keyboard.KEY_F) {
-		//		        	setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, !Display.isFullscreen());
-		//		        }
-		//		        else if (Keyboard.getEventKey() == Keyboard.KEY_V) {
-		//		        	vsync = !vsync;
-		//		        	Display.setVSyncEnabled(vsync);
-		//		        }
-		//		    }
-		//		}
-
-		// keep quad on the screen
-		//		if (x < 0) x = 0;
-		//		if (x > SCREEN_WIDTH) x = SCREEN_WIDTH;
-		//		if (y < 0) y = 0;
-		//		if (y > SCREEN_HEIGHT) y = SCREEN_HEIGHT;
-
-		//updateFPS(); // update FPS Counter
-	}
+	//	public void update(int delta) {
+	//		player.update(delta);
+	//		// rotate quad
+	//		//		rotation += 0.15f * delta;
+	//		// 
+	//		//		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.35f * delta;
+	//		//		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.35f * delta;
+	//		// 
+	//		//		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y += 0.35f * delta;
+	//		//		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y -= 0.35f * delta;
+	//
+	//		//		while (Keyboard.next()) {
+	//		//		    if (Keyboard.getEventKeyState()) {
+	//		//		        if (Keyboard.getEventKey() == Keyboard.KEY_F) {
+	//		//		        	setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, !Display.isFullscreen());
+	//		//		        }
+	//		//		        else if (Keyboard.getEventKey() == Keyboard.KEY_V) {
+	//		//		        	vsync = !vsync;
+	//		//		        	Display.setVSyncEnabled(vsync);
+	//		//		        }
+	//		//		    }
+	//		//		}
+	//
+	//		// keep quad on the screen
+	//		//		if (x < 0) x = 0;
+	//		//		if (x > SCREEN_WIDTH) x = SCREEN_WIDTH;
+	//		//		if (y < 0) y = 0;
+	//		//		if (y > SCREEN_HEIGHT) y = SCREEN_HEIGHT;
+	//
+	//		//updateFPS(); // update FPS Counter
+	//	}
 
 	/**
 	 * Set the display mode to be used 
@@ -168,7 +164,7 @@ public class OGLRenderer {
 	 * 
 	 * @return milliseconds passed since last frame 
 	 */
-	public int getDelta() {
+	public static int getDelta() {
 		long time = getTime();
 		int delta = (int) (time - lastFrame);
 		lastFrame = time;
@@ -181,7 +177,7 @@ public class OGLRenderer {
 	 * 
 	 * @return The system time in milliseconds
 	 */
-	public long getTime() {
+	public static long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
@@ -205,25 +201,26 @@ public class OGLRenderer {
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 	}
 
+
 	public void renderGL() {
 		// Clear The Screen And The Depth Buffer
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
 		// R,G,B,A Set The Color To Blue One Time Only
-		//		GL11.glColor3f(0.5f, 0.5f, 1.0f);
+		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 		//Background texture
 		Texture bgtex = WorldBuilder.loadTexture("res/puck.png");
 		bgtex.bind();
 
 		glBegin(GL_QUADS);
-			glTexCoord2f(0, 0);
-			glVertex2d(0, 0);
 			glTexCoord2f(0, 1);
-			glVertex2d(SCREEN_WIDTH, 0);
+			glVertex2d(0, 0);
 			glTexCoord2f(1, 1);
-			glVertex2d(SCREEN_WIDTH, SCREEN_HEIGHT);
+			glVertex2d(SCREEN_WIDTH, 0);
 			glTexCoord2f(1, 0);
+			glVertex2d(SCREEN_WIDTH, SCREEN_HEIGHT);
+			glTexCoord2f(0, 0);
 			glVertex2d(0, SCREEN_HEIGHT);
 		glEnd();
 
@@ -231,22 +228,12 @@ public class OGLRenderer {
 		for(PlatformEntity plat : platforms){
 			plat.draw();
 		}
-		
+
 		//draw player
+		player.update();
 		player.draw();
 
-		//		GL11.glPushMatrix();
-		//		GL11.glTranslatef(x, y, 0);
-		//		GL11.glRotatef(rotation, 0f, 0f, 1f);
-		//		GL11.glTranslatef(-x, -y, 0);
-		//
-		//		GL11.glBegin(GL11.GL_QUADS);
-		//		GL11.glVertex2f(x - 50, y - 50);
-		//		GL11.glVertex2f(x + 50, y - 50);
-		//		GL11.glVertex2f(x + 50, y + 50);
-		//		GL11.glVertex2f(x - 50, y + 50);
-		//		GL11.glEnd();
-		//		GL11.glPopMatrix();
+		
 	}
 
 	public static void main(String[] argv) {
