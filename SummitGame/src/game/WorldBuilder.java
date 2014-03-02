@@ -24,8 +24,8 @@ public class WorldBuilder {
 		floor.setWidth(OGLRenderer.SCREEN_WIDTH);
 		platforms.add(floor);
 		
-		for(j = 0; j < OGLRenderer.SCREEN_WIDTH; j+=OGLRenderer.SCREEN_WIDTH) {
-			for(i = 100; i < OGLRenderer.SCREEN_HEIGHT; i+=100){
+		for(j = 0; j < OGLRenderer.SCREEN_WIDTH; j+=OGLRenderer.SCREEN_WIDTH/3) {
+			for(i = 75; i < OGLRenderer.SCREEN_HEIGHT; i+=75){
 				Random generator = new Random();
 				PlatformEntity plat = new PlatformEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH), i);
 				platforms.add(plat);

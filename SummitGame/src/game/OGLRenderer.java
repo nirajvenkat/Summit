@@ -73,21 +73,29 @@ public class OGLRenderer {
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.2f * delta;
 		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.2f * delta;
 		
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP) && !player.isJumping()) player.jump();
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP) && !player.isJumping() && !player.isFalling()) player.jump();
 		//gravity
+		double newvel = player.getVvel();
 		if(player.isJumping()){
 			//y -= 0.098f * delta;
-			double newvel = player.getVvel();
 			if(newvel > .1f){
 				newvel *= .75;
-			}else if(newvel < -0.58f){
-				
+				player.setVvel(newvel);
 			}else{
-				newvel -= .05f;
+				player.fall();
 			}
-			player.setVvel(newvel);
-			y += newvel * delta;
 		}
+		if(player.isFalling() && newvel > -0.35f){
+			newvel -= .035f;
+			player.setVvel(newvel);
+		}
+		
+		//moving downwards? set falling
+		if((y+(newvel*delta)) < y){
+			player.fall();
+		}
+		y += newvel * delta;
+		
 		//		while (Keyboard.next()) {
 		//		    if (Keyboard.getEventKeyState()) {
 		//		        if (Keyboard.getEventKey() == Keyboard.KEY_F) {

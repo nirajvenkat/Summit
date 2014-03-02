@@ -13,7 +13,7 @@ public class PlayerEntity implements Entity {
 
 	protected double x, y, width, height, vvel;
 	protected Rectangle hitbox = new Rectangle();
-	protected boolean jumping;
+	protected boolean jumping, falling;
 	
 	public PlayerEntity(double x, double y) {
 		this.x = x;
@@ -24,12 +24,20 @@ public class PlayerEntity implements Entity {
 	
 	public void jump(){
 		jumping = true;
-		vvel = 3.0f;
+		vvel = 2.0f;
 	}
 	
 	public void land(){
-		vvel = 0;
+		falling = false;
 		jumping = false;
+	}
+	
+	public boolean isFalling(){
+		return falling;
+	}
+	
+	public void fall(){
+		falling = true;
 	}
 	
 	public boolean isJumping(){
