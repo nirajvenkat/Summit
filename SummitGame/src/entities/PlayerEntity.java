@@ -1,14 +1,12 @@
 package entities;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex2d;
+import static org.lwjgl.opengl.GL11.*;
+import game.OGLRenderer;
 import game.WorldBuilder;
 
 import java.awt.Rectangle;
 
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.opengl.Texture;
 
 public class PlayerEntity implements Entity {
@@ -25,25 +23,52 @@ public class PlayerEntity implements Entity {
 	
 	@Override
 	public void draw() {
-		Texture playTexture = WorldBuilder.loadTexture("res/stone.png");
-		playTexture.bind();
+//		Texture playTexture = WorldBuilder.loadTexture("res/stone.png");
+//		playTexture.bind();
+//		
+//		glBegin(GL_QUADS);
+//			glTexCoord2f(0, 0);
+//			glVertex2d(x, y);
+//			glTexCoord2f(0, 1);
+//			glVertex2d(x + width, y);
+//			glTexCoord2f(1, 1);
+//			glVertex2d(x + width, y + height);
+//			glTexCoord2f(1, 0);
+//			glVertex2d(x, y + height);
+//		glEnd();
 		
+		glPushMatrix();
 		glBegin(GL_QUADS);
-			glTexCoord2f(0, 0);
+			glColor3d(1, 0, 0);
 			glVertex2d(x, y);
-			glTexCoord2f(0, 1);
+			glColor3d(1, 0, 0);
 			glVertex2d(x + width, y);
-			glTexCoord2f(1, 1);
+			glColor3d(1, 0, 0);
 			glVertex2d(x + width, y + height);
-			glTexCoord2f(1, 0);
+			glColor3d(1, 0, 0);
 			glVertex2d(x, y + height);
 		glEnd();
+		glPopMatrix();
+		
+		
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		/*
+		int delta = OGLRenderer.getDelta();
+		
+		double oldX = x;
+		double oldY = y;
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.35f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.35f * delta;		 
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y += 0.35f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y -= 0.35f * delta;
+		
+		if(x < 0 || x > OGLRenderer.SCREEN_WIDTH) x = oldX;
+		if(y < 0 || y > OGLRenderer.SCREEN_HEIGHT) y = oldY;
+		*/
 	}
 
 	@Override
@@ -128,5 +153,6 @@ public class PlayerEntity implements Entity {
 		}
 		return y;
 	}
+
 
 }
