@@ -20,15 +20,11 @@ public class WorldBuilder {
 		ArrayList<PlatformEntity> platforms = new ArrayList<PlatformEntity>();
 		double i, j;
 		
-		PlatformEntity floor = new PlatformEntity(0, 0);
-		floor.setWidth(OGLRenderer.SCREEN_WIDTH);
-		platforms.add(floor);
-		
 		for(j = 0; j < OGLRenderer.SCREEN_WIDTH; j+=OGLRenderer.SCREEN_WIDTH/3) {
 			for(i = 75; i < OGLRenderer.SCREEN_HEIGHT; i+=75){
 				Random generator = new Random();
 				PlatformEntity plat = new PlatformEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH), i);
-				/*TODO boolean intersection = false;
+				boolean intersection = false;
 				if(!platforms.isEmpty()){
 					PlatformEntity newp = new PlatformEntity(0,0);
 					PlatformEntity oldp = new PlatformEntity(0,0);
@@ -52,13 +48,16 @@ public class WorldBuilder {
 						platforms.remove(oldp);
 						platforms.add(newp);
 					}
-				}else if(!intersection || platforms.isEmpty()){
-					System.out.print("first");
+				}
+				if(!intersection || platforms.isEmpty()){
 					platforms.add(plat);
-				}//endif*/
-				platforms.add(plat);
+				}//endif
 			}//endfori
 		}//enforj
+		
+		PlatformEntity floor = new PlatformEntity(0, 0);
+		floor.setWidth(OGLRenderer.SCREEN_WIDTH);
+		platforms.add(floor);
 		
 		return platforms;
 	}
@@ -78,5 +77,18 @@ public class WorldBuilder {
 		return null;
 	}
 	
-	
+	public static Texture loadBackground(String textureFilename){
+		try {
+			Texture texture = TextureLoader.getTexture("JPG", new FileInputStream(textureFilename));
+			return texture;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }
