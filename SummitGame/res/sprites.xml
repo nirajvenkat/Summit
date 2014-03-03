@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:53f01151dff55980b360d16646e2088e:18e1d2495612724ae75aeae8a02b240c:a3c246832ea35f0bdda766159aff8361$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="sprites.png" width="256" height="512">
+    <sprite n="1.png" x="160" y="2" w="94" h="152" oX="3" oY="6" oW="160" oH="100" r="y"/>
+    <sprite n="2.png" x="104" y="308" w="100" h="152" oX="4" oY="0" oW="160" oH="100" r="y"/>
+    <sprite n="3.png" x="2" y="308" w="100" h="152" oX="4" oY="0" oW="160" oH="100" r="y"/>
+    <sprite n="4.png" x="2" y="206" w="152" h="100" oX="3" oY="0" oW="160" oH="100"/>
+    <sprite n="5.png" x="2" y="104" w="152" h="100" oX="4" oY="0" oW="160" oH="100"/>
+    <sprite n="6.png" x="2" y="2" w="156" h="100" oX="4" oY="0" oW="160" oH="100"/>
+</TextureAtlas>

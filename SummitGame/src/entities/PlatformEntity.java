@@ -41,13 +41,13 @@ public class PlatformEntity implements Entity {
 //		glEnd();
 		
 		glBegin(GL_QUADS);
-			glColor3d(0, 0, 0);
+			glColor3d(0.7, 0.7, 0.7);
 			glVertex2d(x, y);
-			glColor3d(0, 0, 0);
+			glColor3d(0.7, 0.7, 0.7);
 			glVertex2d(x + width, y);
-			glColor3d(0, 0, 0);
+			glColor3d(0.7, 0.7, 0.7);
 			glVertex2d(x + width, y + height);
-			glColor3d(0, 0, 0);
+			glColor3d(0.7, 0.7, 0.7);
 			glVertex2d(x, y + height);
 		glEnd();
 		

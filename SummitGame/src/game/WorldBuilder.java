@@ -78,18 +78,5 @@ public class WorldBuilder {
 		return null;
 	}
 	
-	public static Texture loadBackground(String textureFilename){
-		try {
-			Texture texture = TextureLoader.getTexture("JPG", new FileInputStream(textureFilename));
-			return texture;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
+	
 }
