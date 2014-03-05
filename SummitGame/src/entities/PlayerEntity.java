@@ -90,10 +90,18 @@ public class PlayerEntity implements Entity {
 	public int update(ArrayList<PlatformEntity> platforms, int delta) {
 		double x = this.getX();
 		double y = this.getY();
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.2f * delta;
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.2f * delta;
+		if(this.id == 1){
+			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.2f * delta;
+			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.2f * delta;
 		
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP) && !this.isJumping() && !this.isFalling()) this.jump();
+			if (Keyboard.isKeyDown(Keyboard.KEY_UP) && !this.isJumping() && !this.isFalling()) this.jump();
+		}
+		if(this.id == 2){
+			if (Keyboard.isKeyDown(Keyboard.KEY_A)) x -= 0.2f * delta;
+			if (Keyboard.isKeyDown(Keyboard.KEY_D)) x += 0.2f * delta;
+		
+			if (Keyboard.isKeyDown(Keyboard.KEY_W) && !this.isJumping() && !this.isFalling()) this.jump();
+		}
 		//gravity
 		double newvel = this.getVvel();
 		if(this.isJumping()){

@@ -34,7 +34,7 @@ public class OGLRenderer {
 	//Platform List
 	private static ArrayList<PlatformEntity> platforms;
 	//Player
-	private static PlayerEntity player;
+	private ArrayList<PlayerEntity> players;
 	private static int winner;
 
 	public void start() {
@@ -52,7 +52,11 @@ public class OGLRenderer {
 
 		//Build world
 		platforms = WorldBuilder.build();
-		player = new PlayerEntity(SCREEN_WIDTH/4,10,1);
+		players = new ArrayList<PlayerEntity>();
+		PlayerEntity p1 = new PlayerEntity(SCREEN_WIDTH/4,10,1);
+		PlayerEntity p2 = new PlayerEntity(SCREEN_WIDTH/2,10,2);
+		players.add(p1);
+		players.add(p2);
 		winner = 0;
 
 		while (!Display.isCloseRequested() && winner == 0) {
@@ -72,7 +76,9 @@ public class OGLRenderer {
 		// rotate quad
 		//		rotation += 0.15f * delta;
 		//TODO get two players working
-		winner = player.update(platforms, delta);
+		for(PlayerEntity p : players){
+			winner = p.update(platforms, delta);
+		}
 		
 		//		while (Keyboard.next()) {
 		//		    if (Keyboard.getEventKeyState()) {
@@ -217,14 +223,15 @@ public class OGLRenderer {
 			glVertex2d(0, SCREEN_HEIGHT);
 		glEnd();
 
-		// draw quad
+		// draw platforms
 		for(PlatformEntity plat : platforms){
 			plat.draw();
 		}
 
 		//draw player
-		player.update();
-		player.draw();
+		for(PlayerEntity p : players){
+			p.draw();
+		}
 
 		
 	}
