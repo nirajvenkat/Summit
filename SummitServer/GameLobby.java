@@ -219,6 +219,7 @@ public class GameLobby
 
 		public void sendTCP(String data)
 		{
+			System.out.println("Sending via TCP: " + data);
 			player.TCPConnection.sendTCP(data);
 		}
 
@@ -247,11 +248,12 @@ public class GameLobby
 					DatagramPacket receivePacket = new DatagramPacket(recv, recv.length);
 					SOCK.receive(receivePacket);
 					String data = new String(receivePacket.getData());
-					System.out.println("Received: " + data);
+					data = data.trim();
+					System.out.println("Received: " + data + " from " + player.ip_address + ", " + player.PORT);
 
 					for(GameThread thread: threads)
 					{
-						if(!thread.player.equals(this.player))
+						if(!thread.player.equals(player))
 						{
 							thread.send(data);
 						}
