@@ -151,7 +151,6 @@ public class PlayerEntity implements Entity {
 		if ((x+this.getWidth()) > OGLRenderer.SCREEN_WIDTH) x = (OGLRenderer.SCREEN_WIDTH-this.getWidth());
 		if (y < 0) y = 10;
 		
-		//TODO determine who won and display that
 		if ((y+this.getHeight()) > OGLRenderer.SCREEN_HEIGHT){
 			return this.id;
 		}

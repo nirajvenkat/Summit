@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -34,10 +33,11 @@ public class OGLRenderer {
 	//Platform List
 	private static ArrayList<PlatformEntity> platforms;
 	//Player
+	private int numPlayers;
 	private ArrayList<PlayerEntity> players;
 	private static int winner;
 
-	public void start() {
+	public void start(int np) {
 		try {
 			setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, true);
 			Display.create();
@@ -47,16 +47,16 @@ public class OGLRenderer {
 		}
 
 		initGL(); // init OpenGL
-		getDelta(); // call once before loop to initialise lastFrame
-		lastFPS = getTime(); // call before loop to initialise fps timer
+		getDelta(); // call once before loop to initialize lastFrame
+		lastFPS = getTime(); // call before loop to initialize fps timer
 
 		//Build world
 		platforms = WorldBuilder.build();
 		players = new ArrayList<PlayerEntity>();
-		PlayerEntity p1 = new PlayerEntity(SCREEN_WIDTH/4,10,1);
-		PlayerEntity p2 = new PlayerEntity(SCREEN_WIDTH/2,10,2);
-		players.add(p1);
-		players.add(p2);
+		numPlayers = np;
+		for(int i = 1; i <= numPlayers; i++){
+			players.add(new PlayerEntity(i*SCREEN_WIDTH/(numPlayers+1),10,i));
+		}
 		winner = 0;
 
 		while (!Display.isCloseRequested() && winner == 0) {
@@ -67,6 +67,8 @@ public class OGLRenderer {
 			Display.update();
 			Display.sync(60); // cap fps to 60fps
 		}
+		//TODO Display winner image in Display
+		//TODO check score against database and update
 		System.out.print("player " + winner + " wins!");
 
 		Display.destroy();
@@ -75,7 +77,7 @@ public class OGLRenderer {
 	public void update(int delta) {
 		// rotate quad
 		//		rotation += 0.15f * delta;
-		//TODO get two players working
+		//TODO get two players working via networking
 		for(PlayerEntity p : players){
 			winner = p.update(platforms, delta);
 		}
@@ -237,7 +239,9 @@ public class OGLRenderer {
 	}
 
 	public static void main(String[] argv) {
+		//TODO make a start screen
+		//TODO connect to the High Score Database
 		OGLRenderer fullscreenExample = new OGLRenderer();
-		fullscreenExample.start();
+		fullscreenExample.start(2);
 	}
 }

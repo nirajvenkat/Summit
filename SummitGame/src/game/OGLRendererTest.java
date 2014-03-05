@@ -57,7 +57,7 @@ public class OGLRendererTest {
 	public void testSetDisplayAfterStart() {
 		//Tester should verify that window does not change modes
 		tr.setDisplayMode(320, 200, false);
-		tr.start();
+		tr.start(2);
 		tr.setDisplayMode(800, 600, true);
 		assertFalse(Display.isCreated());
 	}
@@ -65,16 +65,16 @@ public class OGLRendererTest {
 	@Test
 	public void testMultipleStarts() {
 		tr.setDisplayMode(320, 200, false);
-		tr.start();
+		tr.start(2);
 		OGLRenderer twin = new OGLRenderer();
 		twin.setDisplayMode(400, 600, false);
-		twin.start();
+		twin.start(2);
 	}
 	
 	@Test
 	public void testStart() {
 		tr.setDisplayMode(320, 200, false);
-		tr.start();
+		tr.start(2);
 	}
 
 }
