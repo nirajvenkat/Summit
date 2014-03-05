@@ -11,7 +11,7 @@ public class PlayerEntityTest {
 
 	@Before
 	public void setUp() throws Exception {
-		p1 = new PlayerEntity(20,20);
+		p1 = new PlayerEntity(20,20, 1);
 	}
 
 	@After
@@ -72,31 +72,31 @@ public class PlayerEntityTest {
 	
 	@Test
 	public void testIntersects() {
-		p2 = new PlayerEntity(22,22);
+		p2 = new PlayerEntity(22,22,2);
 		assertTrue(p1.intersects(p2));
 	}
 	
 	@Test
 	public void testIntersectsTop() {
-		p2 = new PlayerEntity(20,0);
+		p2 = new PlayerEntity(20,0,2);
 		assertFalse(p1.intersects(p2));
 	}
 	
 	@Test
 	public void testIntersectsRight() {
-		p2 = new PlayerEntity(30,20);
+		p2 = new PlayerEntity(30,20,2);
 		assertFalse(p1.intersects(p2));
 	}
 	
 	@Test
 	public void testIntersectsBottom() {
-		p2 = new PlayerEntity(20,40);
+		p2 = new PlayerEntity(20,40,2);
 		assertFalse(p1.intersects(p2));
 	}
 	
 	@Test
 	public void testIntersectsLeft() {
-		p2 = new PlayerEntity(10,20);
+		p2 = new PlayerEntity(10,20,2);
 		assertFalse(p1.intersects(p2));
 	}
 

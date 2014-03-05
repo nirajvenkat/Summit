@@ -5,6 +5,7 @@ import game.OGLRenderer;
 import game.WorldBuilder;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.opengl.Texture;
@@ -14,12 +15,14 @@ public class PlayerEntity implements Entity {
 	protected double x, y, width, height, vvel;
 	protected Rectangle hitbox = new Rectangle();
 	protected boolean jumping, falling;
+	protected int id;
 	
-	public PlayerEntity(double x, double y) {
+	public PlayerEntity(double x, double y, int id) {
 		this.x = x;
 		this.y = y;
 		this.width = 10;
 		this.height = 20;
+		this.id = id;
 	}
 	
 	public void jump(){
@@ -84,8 +87,69 @@ public class PlayerEntity implements Entity {
 		
 	}
 
-	@Override
-	public void update() {
+	public int update(ArrayList<PlatformEntity> platforms, int delta) {
+		double x = this.getX();
+		double y = this.getY();
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.2f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.2f * delta;
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP) && !this.isJumping() && !this.isFalling()) this.jump();
+		//gravity
+		double newvel = this.getVvel();
+		if(this.isJumping()){
+			//y -= 0.098f * delta;
+			if(newvel > .1f){
+				newvel *= .75;
+				this.setVvel(newvel);
+			}else{
+				this.fall();
+			}
+		}
+		if(this.isFalling() && newvel > -0.35f){
+			newvel -= .035f;
+			this.setVvel(newvel);
+		}
+		
+		//moving downwards? set falling
+		if((y+(newvel*delta)) < y){
+			this.fall();
+		}
+		y += newvel * delta;
+		this.setLocation(x, y);
+		
+		//collision detection between player and platforms
+		for(PlatformEntity plat : platforms){
+			if(this.intersects(plat)){
+				if(this.intersectsY(plat) != y){
+					y = this.intersectsY(plat);
+					this.setY(y);
+					if(this.intersects(plat)){
+						if(this.intersectsX(plat) != x){
+							x = this.intersectsX(plat);
+							this.setX(x);
+						}
+					}
+				}else{
+					if(this.intersectsX(plat) != x){
+						y = this.intersectsX(plat);
+						this.setX(x);
+					}
+				}
+			}
+		}
+		
+		// keep player on the screen
+		if (x < 0) x = 0;
+		if ((x+this.getWidth()) > OGLRenderer.SCREEN_WIDTH) x = (OGLRenderer.SCREEN_WIDTH-this.getWidth());
+		if (y < 0) y = 10;
+		
+		//TODO determine who won and display that
+		if ((y+this.getHeight()) > OGLRenderer.SCREEN_HEIGHT){
+			return this.id;
+		}
+		this.setLocation(x, y);
+
+		return 0;
 		/*
 		int delta = OGLRenderer.getDelta();
 		
@@ -100,6 +164,12 @@ public class PlayerEntity implements Entity {
 		if(x < 0 || x > OGLRenderer.SCREEN_WIDTH) x = oldX;
 		if(y < 0 || y > OGLRenderer.SCREEN_HEIGHT) y = oldY;
 		*/
+	}
+	
+	
+	@Override
+	public void update(){
+		
 	}
 
 	@Override

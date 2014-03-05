@@ -52,10 +52,10 @@ public class OGLRenderer {
 
 		//Build world
 		platforms = WorldBuilder.build();
-		player = new PlayerEntity(SCREEN_WIDTH/4,10);
+		player = new PlayerEntity(SCREEN_WIDTH/4,10,1);
 		winner = 0;
 
-		while (!Display.isCloseRequested()) {
+		while (!Display.isCloseRequested() && winner == 0) {
 			int delta = getDelta();
 			update(delta);
 			renderGL();
@@ -63,6 +63,7 @@ public class OGLRenderer {
 			Display.update();
 			Display.sync(60); // cap fps to 60fps
 		}
+		System.out.print("player " + winner + " wins!");
 
 		Display.destroy();
 	}
@@ -71,33 +72,7 @@ public class OGLRenderer {
 		// rotate quad
 		//		rotation += 0.15f * delta;
 		//TODO get two players working
-		double x = player.getX();
-		double y = player.getY();
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.2f * delta;
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.2f * delta;
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP) && !player.isJumping() && !player.isFalling()) player.jump();
-		//gravity
-		double newvel = player.getVvel();
-		if(player.isJumping()){
-			//y -= 0.098f * delta;
-			if(newvel > .1f){
-				newvel *= .75;
-				player.setVvel(newvel);
-			}else{
-				player.fall();
-			}
-		}
-		if(player.isFalling() && newvel > -0.35f){
-			newvel -= .035f;
-			player.setVvel(newvel);
-		}
-		
-		//moving downwards? set falling
-		if((y+(newvel*delta)) < y){
-			player.fall();
-		}
-		y += newvel * delta;
+		winner = player.update(platforms, delta);
 		
 		//		while (Keyboard.next()) {
 		//		    if (Keyboard.getEventKeyState()) {
@@ -111,39 +86,7 @@ public class OGLRenderer {
 		//		    }
 		//		}
 
-		player.setLocation(x, y);
-		//collision detection between player and platforms
-		for(PlatformEntity plat : platforms){
-			if(player.intersects(plat)){
-				if(player.intersectsY(plat) != y){
-					y = player.intersectsY(plat);
-					player.setY(y);
-					if(player.intersects(plat)){
-						if(player.intersectsX(plat) != x){
-							x = player.intersectsX(plat);
-							player.setX(x);
-						}
-					}
-				}else{
-					if(player.intersectsX(plat) != x){
-						y = player.intersectsX(plat);
-						player.setX(x);
-					}
-				}
-			}
-		}
 		
-		// keep player on the screen
-		if (x < 0) x = 0;
-		if ((x+player.getWidth()) > SCREEN_WIDTH) x = (SCREEN_WIDTH-player.getWidth());
-		if (y < 0) y = 10;
-		
-		//TODO determine who won and display that
-		if ((y+player.getHeight()) > SCREEN_HEIGHT){
-			System.out.print("You win\n");
-		}
-		player.setLocation(x, y);
-
 		updateFPS(); // update FPS Counter
 	}
 
