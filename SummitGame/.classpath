@@ -9,6 +9,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/lwjgl-2.9.1/jar/lwjgl_util.jar"/>
 	<classpathentry kind="lib" path="libs/slick/lib/slick.jar"/>
+	<classpathentry kind="lib" path="libs/jdom-2.0.5/jdom-2.0.5.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
