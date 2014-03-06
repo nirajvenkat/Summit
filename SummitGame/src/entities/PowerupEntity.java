@@ -1,62 +1,41 @@
 package entities;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import game.WorldBuilder;
-
 import java.awt.Rectangle;
 
 import org.newdawn.slick.opengl.Texture;
 
-public class PlatformEntity implements Entity {
-	
+import game.WorldBuilder;
+import static org.lwjgl.opengl.GL11.*;
+
+public class PowerupEntity implements Entity {
+
 	protected double x, y, width, height;
 	protected Rectangle hitbox = new Rectangle();
-//	protected enum platformType {
-//		FIXED, MOVING, STICKY, LAVA
-//	}
 	
-	public PlatformEntity(double x, double y) {
+	public PowerupEntity(double x, double y){
 		this.x = x;
 		this.y = y;
-		this.width = 200;
+		this.width = 5;
 		this.height = 10;
 	}
-
+	
 	@Override
 	public void draw() {
-		
-//		Texture platTexture = WorldBuilder.loadTexture("res/stone.png");
-//		platTexture.bind();
-//		
-//		glBegin(GL_QUADS);
-//			glTexCoord2f(0, 0);
-//			glVertex2d(x, y);
-//			glTexCoord2f(0, 1);
-//			glVertex2d(x + width, y);
-//			glTexCoord2f(1, 1);
-//			glVertex2d(x + width, y + height);
-//			glTexCoord2f(1, 0);
-//			glVertex2d(x, y + height);
-//		glEnd();
-		
 		glBegin(GL_QUADS);
-			glColor3d(0.7, 0.7, 0.7);
+			glColor3d(0.7, 1, 0.2);
 			glVertex2d(x, y);
-			glColor3d(0.7, 0.7, 0.7);
+			glColor3d(0.7, 1, 0.2);
 			glVertex2d(x + width, y);
-			glColor3d(0.7, 0.7, 0.7);
+			glColor3d(0.7, 1, 0.2);
 			glVertex2d(x + width, y + height);
-			glColor3d(0.7, 0.7, 0.7);
+			glColor3d(0.7, 1, 0.2);
 			glVertex2d(x, y + height);
 		glEnd();
-		
 	}
 
 	@Override
 	public void update() {
-		//Platforms dont move... for now
-		
+		//Don't do anything with update
 	}
 
 	@Override

@@ -12,10 +12,12 @@ import org.newdawn.slick.opengl.Texture;
 
 public class PlayerEntity implements Entity {
 
-	protected double x, y, width, height, vvel;
-	protected Rectangle hitbox = new Rectangle();
-	protected boolean jumping, falling;
-	protected int id;
+	protected double x, y, width, height;		//player's position and draw box
+	protected double vvel;						//player's vertical velocity
+	protected double jumpvel, fallvel;			//player's max jump and fall velocity
+	protected Rectangle hitbox = new Rectangle();//player's hitbox
+	protected boolean jumping, falling;			//whether the player is falling or jumping
+	protected int id;							//player's identifying number
 	
 	public PlayerEntity(double x, double y, int id) {
 		this.x = x;
@@ -23,36 +25,47 @@ public class PlayerEntity implements Entity {
 		this.width = 10;
 		this.height = 20;
 		this.id = id;
+		this.jumpvel = 2.0f;
+		this.fallvel = -0.35f;
 	}
 	
 	public void jump(){
-		jumping = true;
-		vvel = 2.0f;
+		this.jumping = true;
+		this.vvel = jumpvel;
 	}
 	
 	public void land(){
-		falling = false;
-		jumping = false;
+		this.falling = false;
+		this.jumping = false;
+		this.vvel = -0.01f;
 	}
 	
 	public boolean isFalling(){
-		return falling;
+		return this.falling;
 	}
 	
 	public void fall(){
-		falling = true;
+		this.falling = true;
 	}
 	
 	public boolean isJumping(){
-		return jumping;
+		return this.jumping;
 	}
 	
 	public double getVvel(){
-		return vvel;
+		return this.vvel;
 	}
 	
 	public void setVvel(double newvel){
-		vvel = newvel;
+		this.vvel = newvel;
+	}
+	
+	public void addJumpVel(double newvel){
+		this.jumpvel += newvel;
+	}
+	
+	public void addFallVel(double newvel){
+		this.fallvel += newvel;
 	}
 	
 	@Override
@@ -87,7 +100,7 @@ public class PlayerEntity implements Entity {
 		
 	}
 
-	public int update(ArrayList<PlatformEntity> platforms, int delta) {
+	public int update(ArrayList<PlatformEntity> platforms, ArrayList<PowerupEntity> powerups, int delta) {
 		double x = this.getX();
 		double y = this.getY();
 		if(this.id == 1){
@@ -113,8 +126,11 @@ public class PlayerEntity implements Entity {
 				this.fall();
 			}
 		}
-		if(this.isFalling() && newvel > -0.35f){
+		if(this.isFalling() && newvel > fallvel){
 			newvel -= .035f;
+			if(newvel < fallvel){
+				newvel = fallvel;
+			}
 			this.setVvel(newvel);
 		}
 		
@@ -155,6 +171,19 @@ public class PlayerEntity implements Entity {
 			return this.id;
 		}
 		this.setLocation(x, y);
+		
+		//TODO collision detection between player and powerups
+		PowerupEntity toRemove = null;
+		for(PowerupEntity pow : powerups){
+			if(this.intersects(pow)){
+				toRemove = pow;
+				this.addJumpVel(0.15);
+			}
+		}
+		if(toRemove != null){
+			powerups.remove(toRemove);
+		}
+		
 
 		return 0;
 		/*
@@ -231,7 +260,6 @@ public class PlayerEntity implements Entity {
 		return hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
 	}
 	
-	@Override
 	public double intersectsX(Entity other){
 		//check if player is inbetween other
 		if(other.getX() < x && (other.getX()+other.getWidth()) > (x+width)){
@@ -248,7 +276,6 @@ public class PlayerEntity implements Entity {
 		return x;
 	}
 	
-	@Override
 	public double intersectsY(Entity other){
 		if(other.getY() < y && (other.getY()+other.getHeight()) > (y+height)){
 			return y;
