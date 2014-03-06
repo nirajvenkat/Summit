@@ -14,6 +14,7 @@ import org.newdawn.slick.opengl.Texture;
 
 import entities.PlatformEntity;
 import entities.PlayerEntity;
+import entities.PowerupEntity;
 
 public class OGLRenderer {
 
@@ -33,6 +34,8 @@ public class OGLRenderer {
 
 	//Platform List
 	private static ArrayList<PlatformEntity> platforms;
+	//Powerup List
+	private static ArrayList<PowerupEntity> powerups;
 	//Player
 	private int numPlayers;
 	private ArrayList<PlayerEntity> players;
@@ -53,6 +56,7 @@ public class OGLRenderer {
 
 		//Build world
 		platforms = WorldBuilder.build();
+		powerups = WorldBuilder.spawnPowerups();
 		players = new ArrayList<PlayerEntity>();
 		numPlayers = np;
 		for(int i = 1; i <= numPlayers; i++){
@@ -80,8 +84,13 @@ public class OGLRenderer {
 		//		rotation += 0.15f * delta;
 		//TODO get two players working via networking
 		for(PlayerEntity p : players){
-			winner = p.update(platforms, delta);
+			winner = p.update(platforms, powerups, delta);
+			if(winner != 0){
+				break;
+			}
 		}
+		
+		//TODO collision detection between players
 		
 		//		while (Keyboard.next()) {
 		//		    if (Keyboard.getEventKeyState()) {
@@ -238,7 +247,10 @@ public class OGLRenderer {
 			p.draw();
 		}
 
-		
+		//draw powerups
+		for(PowerupEntity pow : powerups){
+			pow.draw();
+		}
 	}
 
 	public static void main(String[] argv) {

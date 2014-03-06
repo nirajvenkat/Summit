@@ -19,6 +19,7 @@ import static org.lwjgl.opengl.ARBTextureRectangle.GL_TEXTURE_RECTANGLE_ARB;
 
 
 import entities.PlatformEntity;
+import entities.PowerupEntity;
 
 
 public class WorldBuilder {
@@ -31,7 +32,7 @@ public class WorldBuilder {
 		for(j = 0; j < OGLRenderer.SCREEN_WIDTH; j+=OGLRenderer.SCREEN_WIDTH/3) {
 			for(i = 75; i < OGLRenderer.SCREEN_HEIGHT; i+=75){
 				Random generator = new Random();
-				PlatformEntity plat = new PlatformEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH), i);
+				PlatformEntity plat = new PlatformEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH-20), i);
 				boolean intersection = false;
 				if(!platforms.isEmpty()){
 					PlatformEntity newp = new PlatformEntity(0,0);
@@ -68,6 +69,17 @@ public class WorldBuilder {
 		platforms.add(floor);
 		
 		return platforms;
+	}
+	
+	public static ArrayList<PowerupEntity> spawnPowerups(){
+		ArrayList<PowerupEntity> powerups = new ArrayList<PowerupEntity>();
+		for(double i = 85; i < OGLRenderer.SCREEN_HEIGHT; i+=75){
+			Random generator = new Random();
+			PowerupEntity pow = new PowerupEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH-10), i);
+			powerups.add(pow);
+		}
+		
+		return powerups;
 	}
 	
 	public static Texture loadTexture(String textureFilename){
