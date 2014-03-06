@@ -1,6 +1,7 @@
 package game;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.ARBTextureRectangle.GL_TEXTURE_RECTANGLE_ARB;
 
 import java.util.ArrayList;
 
@@ -209,6 +210,7 @@ public class OGLRenderer {
 		GL11.glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	}
 
 
@@ -241,6 +243,7 @@ public class OGLRenderer {
 
 		//draw player
 		for(PlayerEntity p : players){
+			p.update();
 			p.draw();
 		}
 
