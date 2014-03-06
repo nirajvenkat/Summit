@@ -211,7 +211,6 @@ public class PlayerEntity implements Entity {
 			this.fall();
 		}
 		y += newvel * delta;
-		System.out.print(oldy + "->" + y + "\n");
 		this.setLocation(x, y);
 
 		//collision detection between player and platforms
