@@ -22,6 +22,7 @@ import org.lwjgl.input.Keyboard;
 
 public class PlayerEntity implements Entity {
 
+
 	//Sprite variables
 	private static int spritesheet;
 	private static int spriteNo;
@@ -329,8 +330,6 @@ public class PlayerEntity implements Entity {
 		return hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
 	}
 
-
-
 	public double intersectsX(Entity other){
 		//check if player is inbetween other
 		if(other.getX() < x && (other.getX()+other.getWidth()) > (x+width)){
@@ -346,7 +345,6 @@ public class PlayerEntity implements Entity {
 		}
 		return x;
 	}
-
 
 	public double intersectsY(Entity other){
 		if(other.getY() < y && (other.getY()+other.getHeight()) > (y+height)){
