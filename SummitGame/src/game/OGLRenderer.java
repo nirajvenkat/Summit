@@ -254,6 +254,6 @@ public class OGLRenderer {
 		//TODO make a start screen
 		//TODO connect to the High Score Database
 		OGLRenderer fullscreenExample = new OGLRenderer();
-		fullscreenExample.start(2);
+		fullscreenExample.start(1);
 	}
 }

@@ -65,7 +65,9 @@ public class PlayerEntity implements Entity {
 	}
 	
 	public void addFallVel(double newvel){
-		this.fallvel += newvel;
+		if(this.fallvel < -0.1f){
+			this.fallvel += newvel;
+		}
 	}
 	
 	@Override
@@ -103,6 +105,9 @@ public class PlayerEntity implements Entity {
 	public int update(ArrayList<PlatformEntity> platforms, ArrayList<PowerupEntity> powerups, int delta) {
 		double x = this.getX();
 		double y = this.getY();
+		double oldx = this.getX();
+		double oldy = this.getY();
+		
 		if(this.id == 1){
 			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.2f * delta;
 			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.2f * delta;
@@ -139,23 +144,25 @@ public class PlayerEntity implements Entity {
 			this.fall();
 		}
 		y += newvel * delta;
+		System.out.print(oldy + "->" + y + "\n");
 		this.setLocation(x, y);
 		
 		//collision detection between player and platforms
 		for(PlatformEntity plat : platforms){
-			if(this.intersects(plat)){
-				if(this.intersectsY(plat) != y){
-					y = this.intersectsY(plat);
+			if(this.intersects(plat) || 
+					((oldy < plat.getY() && this.y > plat.getY()) && this.isJumping() && (this.x+this.width > plat.getX() && this.x < plat.getX()+plat.getWidth()))){
+				if(this.intersectsY(plat, oldy) != y){
+					y = this.intersectsY(plat, oldy);
 					this.setY(y);
 					if(this.intersects(plat)){
-						if(this.intersectsX(plat) != x){
-							x = this.intersectsX(plat);
+						if(this.intersectsX(plat, oldx) != x){
+							x = this.intersectsX(plat, oldx);
 							this.setX(x);
 						}
 					}
 				}else{
-					if(this.intersectsX(plat) != x){
-						y = this.intersectsX(plat);
+					if(this.intersectsX(plat, oldx) != x){
+						x = this.intersectsX(plat, oldx);
 						this.setX(x);
 					}
 				}
@@ -172,7 +179,6 @@ public class PlayerEntity implements Entity {
 		}
 		this.setLocation(x, y);
 		
-		//TODO collision detection between player and powerups
 		PowerupEntity toRemove = null;
 		for(PowerupEntity pow : powerups){
 			if(this.intersects(pow)){
@@ -181,6 +187,7 @@ public class PlayerEntity implements Entity {
 			}
 		}
 		if(toRemove != null){
+			toRemove.updateStats(this);
 			powerups.remove(toRemove);
 		}
 		
@@ -260,34 +267,47 @@ public class PlayerEntity implements Entity {
 		return hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
 	}
 	
-	public double intersectsX(Entity other){
+	public double intersectsX(Entity other, double oldx){
+		//check if lagged or moved too fast
+		if(oldx < other.getX() && this.x > other.getX()){
+			return other.getX() - this.width;
+		}
+		if(oldx > other.getX()+other.getWidth() && this.x < other.getX()+other.getWidth()){
+			return other.getX() + other.getWidth();
+		}
 		//check if player is inbetween other
-		if(other.getX() < x && (other.getX()+other.getWidth()) > (x+width)){
-			return x;
+		if(other.getX() < this.x && (other.getX()+other.getWidth()) > (this.x+this.width)){
+			return this.x;
 		}
 		//check if player is approaching from left
-		if(other.getX() < (x+width) && other.getX() > x){
-			return (other.getX() - width);
+		if(other.getX() < (this.x+this.width) && other.getX() > this.x){
+			return (other.getX() - this.width);
 		}
 		//check if player is approaching from right
-		if((other.getX()+other.getWidth()) > x){
+		if((other.getX()+other.getWidth()) > this.x){
 			return (other.getX() + other.getWidth());
 		}
-		return x;
+		return this.x;
 	}
 	
-	public double intersectsY(Entity other){
-		if(other.getY() < y && (other.getY()+other.getHeight()) > (y+height)){
-			return y;
+	public double intersectsY(Entity other, double oldy){
+		if(oldy < other.getY() && this.y > other.getY()){
+			return other.getY() - this.height;
 		}
-		if(other.getY() < (y+height) && other.getY() > y){
-			return (other.getY() - height);
+		if(oldy > other.getY()+other.getHeight() && this.y < other.getY()+other.getHeight()){
+			return other.getY() + other.getHeight();
 		}
-		if((other.getY()+other.getHeight()) > y){
+		if(other.getY() < this.y && (other.getY()+other.getHeight()) > (this.y+this.height)){
+			return this.y;
+		}
+		if(other.getY() < (this.y+this.height) && other.getY() > this.y){
+			return (other.getY() - this.height);
+		}
+		if((other.getY()+other.getHeight()) > this.y){
 			this.land();
 			return (other.getY() + other.getHeight());
 		}
-		return y;
+		return this.y;
 	}
 
 

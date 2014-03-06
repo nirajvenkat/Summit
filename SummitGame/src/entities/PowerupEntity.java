@@ -1,6 +1,7 @@
 package entities;
 
 import java.awt.Rectangle;
+import java.util.Random;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -11,26 +12,62 @@ public class PowerupEntity implements Entity {
 
 	protected double x, y, width, height;
 	protected Rectangle hitbox = new Rectangle();
+	int type;
+	protected final int numTypes = 2;
 	
 	public PowerupEntity(double x, double y){
 		this.x = x;
 		this.y = y;
 		this.width = 5;
 		this.height = 10;
+		Random generator = new Random();
+		this.type = generator.nextInt(numTypes);
 	}
 	
 	@Override
 	public void draw() {
-		glBegin(GL_QUADS);
-			glColor3d(0.7, 1, 0.2);
-			glVertex2d(x, y);
-			glColor3d(0.7, 1, 0.2);
-			glVertex2d(x + width, y);
-			glColor3d(0.7, 1, 0.2);
-			glVertex2d(x + width, y + height);
-			glColor3d(0.7, 1, 0.2);
-			glVertex2d(x, y + height);
-		glEnd();
+		switch(this.type){
+			case 0:
+				glBegin(GL_QUADS);
+					glColor3d(0.7, 1, 0.2);
+					glVertex2d(x, y);
+					glColor3d(0.7, 1, 0.2);
+					glVertex2d(x + width, y);
+					glColor3d(0.7, 1, 0.2);
+					glVertex2d(x + width, y + height);
+					glColor3d(0.7, 1, 0.2);
+					glVertex2d(x, y + height);
+				glEnd();
+				break;
+			
+			case 1:
+				glBegin(GL_QUADS);
+					glColor3d(0.7, 0, 0.2);
+					glVertex2d(x, y);
+					glColor3d(0.7, 0, 0.2);
+					glVertex2d(x + width, y);
+					glColor3d(0.7, 0, 0.2);
+					glVertex2d(x + width, y + height);
+					glColor3d(0.7, 0, 0.2);
+					glVertex2d(x, y + height);
+				glEnd();
+				break;
+			
+		}
+	}
+	
+	public void updateStats(PlayerEntity p){
+		//TODO update the player's stats
+		switch(this.type){
+			case 0:
+				p.addJumpVel(0.15f);
+				break;
+				
+			case 1:
+				p.addFallVel(0.05f);
+				break;
+				
+		}
 	}
 
 	@Override
