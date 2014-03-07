@@ -326,7 +326,6 @@ public class PlayerEntity implements Entity {
 		for(PowerupEntity pow : powerups){
 			if(this.intersects(pow)){
 				toRemove = pow;
-				this.addJumpVel(0.15);
 			}
 		}
 		if(toRemove != null){

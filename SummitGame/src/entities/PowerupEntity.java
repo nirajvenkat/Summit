@@ -83,7 +83,6 @@ public class PowerupEntity implements Entity {
 	}
 	
 	public void updateStats(PlayerEntity p){
-		//TODO update the player's stats
 		p.addPoints(this.points);
 		switch(this.type){
 			case 0:
