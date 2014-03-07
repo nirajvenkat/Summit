@@ -31,7 +31,7 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 	boolean isHighScore = false;
 	
 	//public SummitVictoryScreen(ArrayList<entities.PlayerEntity> players)
-	public SummitVictoryScreen(ArrayList<TestPlayer> players)
+	public SummitVictoryScreen(ArrayList<entities.PlayerEntity> players)
 	{
 		setResizable(false);
 		setSize(700, 125);
@@ -61,24 +61,24 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 	    
 	    
 	    //entities.PlayerEntity winner = players.get(0);
-	    TestPlayer winner = players.get(0);
+	    entities.PlayerEntity winner = players.get(0);
 	    
 	    //for(entities.PlayerEntity player : players)
-	    for(TestPlayer player : players)
+	    for(entities.PlayerEntity player : players)
 	    {
 	    	
-	    	if(player.score > winner.score)
+	    	if(player.getScore() > winner.getScore())
 	    	{
 	    		winner = player;
 	    	}
 	    	else
 	    	{
 	    		playerPanel.add(new JLabel(""));
-	    		JLabel tmp_player = new JLabel("Player " + player.id);
+	    		JLabel tmp_player = new JLabel("Player " + player.getID());
 	    		tmp_player.setForeground(foregroundColor);
 	    		tmp_player.setFont(menuFont);
 	    		playerPanel.add(tmp_player);
-	    		JLabel tmp_score = new JLabel(player.score + "");
+	    		JLabel tmp_score = new JLabel(player.getScore() + "");
 	    		tmp_score.setForeground(foregroundColor);
 	    		tmp_score.setFont(menuFont);
 		    	playerPanel.add(tmp_score);
@@ -86,14 +86,14 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 	    }
 	    
 	    playerPanel.add(new JLabel(new ImageIcon(winner_path)));
-	    JLabel tmp_player = new JLabel("Player " + winner.id);
+	    JLabel tmp_player = new JLabel("Player " + winner.getID());
 	    tmp_player.setForeground(foregroundColor);
 		tmp_player.setFont(menuFont);
 	    playerPanel.add(tmp_player);
-	    JLabel tmp_score = new JLabel(winner.score + "");
+	    JLabel tmp_score = new JLabel(winner.getScore() + "");
 	    tmp_score.setFont(menuFont);
 	    tmp_score.setForeground(foregroundColor);
-	    tmp_score.setText(winner.score + "");
+	    tmp_score.setText(winner.getScore() + "");
     	playerPanel.add(tmp_score);
 	    
 	    add(playerPanel, BorderLayout.NORTH);
@@ -105,7 +105,7 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 	    	s.connect(new InetSocketAddress(SummitMenu.SERVER_ADDR, SummitMenu.SERVER_PORT), 3000);
 			in = new DataInputStream(s.getInputStream());
 			out = new DataOutputStream(s.getOutputStream());
-			out.writeUTF("PUT;" + winner.score);
+			out.writeUTF("PUT;" + winner.getScore());
 			int resp = in.readInt();
 			if(resp == 1)
 			{
@@ -124,7 +124,7 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 				JLabel nameLabel = new JLabel("Your Name: ");
 				nameLabel.setFont(menuFont);
 				nameLabel.setForeground(Color.WHITE);
-				JLabel promptLabel = new JLabel("Player " + winner.id + " Has a New High Score!");
+				JLabel promptLabel = new JLabel("Player " + winner.getID() + " Has a New High Score!");
 				promptLabel.setFont(menuFont);
 				promptLabel.setForeground(Color.WHITE);
 				inputPanel.add(promptLabel, BorderLayout.NORTH);

@@ -179,6 +179,11 @@ public class PlayerEntity implements Entity {
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
 	}
+	
+	public int getID()
+	{
+		return id;
+	}
 
 	public int update(ArrayList<PlatformEntity> platforms, ArrayList<PowerupEntity> powerups, int delta) {
 		double x = this.getX();

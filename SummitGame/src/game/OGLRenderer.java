@@ -90,7 +90,7 @@ public class OGLRenderer {
 		//TODO Display winner image in Display
 		//TODO check score against database and update
 		//System.out.print("player " + winner + " wins!");
-		//SummitVictoryScreen svs = new SummitVictoryScreen(players);
+		SummitVictoryScreen svs = new SummitVictoryScreen(players);
 
 		Display.destroy();
 	}
