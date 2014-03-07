@@ -331,7 +331,7 @@ public class PlayerEntity implements Entity {
 		}
 		if(toRemove != null){
 			toRemove.updateStats(this);
-			powerups.remove(toRemove);
+			//powerups.remove(toRemove);
 		}
 		
 
