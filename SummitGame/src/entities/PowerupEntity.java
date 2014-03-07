@@ -26,11 +26,9 @@ public class PowerupEntity implements Entity {
 		switch(this.type){
 		case 0:
 			this.points = 3;
-			break;
 			
 		case 1:
 			this.points = 4;
-			break;
 			
 		case 2:
 			this.points = 5;
@@ -83,7 +81,6 @@ public class PowerupEntity implements Entity {
 	}
 	
 	public void updateStats(PlayerEntity p){
-		//TODO update the player's stats
 		p.addPoints(this.points);
 		switch(this.type){
 			case 0:
@@ -92,7 +89,6 @@ public class PowerupEntity implements Entity {
 				
 			case 1:
 				p.addFallVel(0.05f);
-				break;
 				
 			case 2:
 				p.addXVel(0.02f);

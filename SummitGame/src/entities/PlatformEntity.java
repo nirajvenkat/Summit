@@ -26,11 +26,11 @@ public class PlatformEntity implements Entity {
 		this.x = x;
 		this.y = y;
 		Random generator = new Random();
-		if(x == 0 && y == 0){
-			this.type = 0;
-		}else{
+		//if(x == 0 && y == 0){
+		//	this.type = 0;
+		//}else{
 			this.type = generator.nextInt(numTypes);
-		}
+		//}
 		switch(this.type){
 		case 0:
 			//fixed
@@ -51,16 +51,6 @@ public class PlatformEntity implements Entity {
 				this.right = false;
 			}else{
 				this.right = true;
-			}
-			break;
-			
-		case 2:
-			//moving on y axis
-			this.up = generator.nextBoolean();
-			if(this.up){
-				this.down = false;
-			}else{
-				this.down = true;
 			}
 			break;
 		}
@@ -165,10 +155,6 @@ public class PlatformEntity implements Entity {
 			}
 			
 			this.setX(newx);
-			break;
-			
-		case 2:
-			//moving on y axis
 			break;
 		}//end switch
 	}

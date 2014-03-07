@@ -67,7 +67,7 @@ public class WorldBuilder {
 						platforms.add(newp);
 					}
 				}
-				if((!intersection && !diffIntersection) || platforms.isEmpty()){
+				if((!intersection && !diffIntersection) ){
 					platforms.add(plat);
 				}//endif
 			}//endfori
@@ -84,7 +84,7 @@ public class WorldBuilder {
 		ArrayList<PowerupEntity> powerups = new ArrayList<PowerupEntity>();
 		for(double i = 0; i < OGLRenderer.SCREEN_HEIGHT; i+=44){
 			Random generator = new Random();
-			PowerupEntity pow = new PowerupEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH-10), i);
+			PowerupEntity pow = new PowerupEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH), i);
 			powerups.add(pow);
 		}
 		

@@ -245,7 +245,7 @@ public class PlayerEntity implements Entity {
 		double oldx = this.getX();
 		double oldy = this.getY();
 		
-		if(this.id == 1){
+		if(this.id == 0){
 			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= this.xvel * delta;
 			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += this.xvel * delta;
 
@@ -256,7 +256,7 @@ public class PlayerEntity implements Entity {
 			}
 			
 		}
-		if(this.id == 2){
+		if(this.id == 1){
 			if (Keyboard.isKeyDown(Keyboard.KEY_A)) x += 0.2f * delta;
 			if (Keyboard.isKeyDown(Keyboard.KEY_D)) x -= 0.2f * delta;
 

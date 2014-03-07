@@ -74,7 +74,7 @@ public class OGLRenderer {
 		powerups = WorldBuilder.spawnPowerups();
 		players = new ArrayList<PlayerEntity>();
 		numPlayers = np;
-		for(int i = 1; i <= numPlayers; i++){
+		for(int i = 0; i <= numPlayers; i++){
 			players.add(new PlayerEntity(i*SCREEN_WIDTH/(numPlayers+1),10,i));
 		}
 		winner = 0;
