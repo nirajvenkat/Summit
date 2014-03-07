@@ -202,7 +202,7 @@ public class PlayerEntity implements Entity {
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 		
 		//get rid of black box
-        glEnable(GL_BLEND);
+        //glEnable(GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
 	}
