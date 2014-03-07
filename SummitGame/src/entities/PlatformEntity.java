@@ -65,6 +65,10 @@ public class PlatformEntity implements Entity {
 		}
 	}
 	
+	public void setType(int t){
+		this.type = t;
+	}
+	
 	public int getType(){
 		return this.type;
 	}
