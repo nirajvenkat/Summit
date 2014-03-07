@@ -103,6 +103,10 @@ public class OGLRenderer {
 			}
 		}
 		
+		for(PlatformEntity plat : platforms){
+			plat.update(platforms, delta);
+		}
+		
 		//TODO collision detection between players
 		
 		//		while (Keyboard.next()) {

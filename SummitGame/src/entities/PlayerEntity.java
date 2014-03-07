@@ -360,18 +360,22 @@ public class PlayerEntity implements Entity {
 	}
 	
 	public double intersectsY(Entity other, double oldy){
+		//check if lagged or moved too fast
 		if(oldy < other.getY() && this.y > other.getY()){
 			return other.getY() - this.height;
 		}
 		if(oldy > other.getY()+other.getHeight() && this.y < other.getY()+other.getHeight()){
 			return other.getY() + other.getHeight();
 		}
+		//check if player is inbetween other
 		if(other.getY() < this.y && (other.getY()+other.getHeight()) > (this.y+this.height)){
 			return this.y;
 		}
+		//check if player is approaching from left
 		if(other.getY() < (this.y+this.height) && other.getY() > this.y){
 			return (other.getY() - this.height);
 		}
+		//check if player is approaching from right
 		if((other.getY()+other.getHeight()) > this.y){
 			this.land();
 			return (other.getY() + other.getHeight());

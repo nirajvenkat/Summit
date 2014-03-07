@@ -34,12 +34,13 @@ public class WorldBuilder {
 				Random generator = new Random();
 				PlatformEntity plat = new PlatformEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH-20), i);
 				boolean intersection = false;
+				boolean diffIntersection = false;
 				if(!platforms.isEmpty()){
 					PlatformEntity newp = new PlatformEntity(0,0);
 					PlatformEntity oldp = new PlatformEntity(0,0);
 					double newX, newWidth;
 					for(PlatformEntity p : platforms){
-						if(p.intersects(plat)){
+						if(p.intersects(plat) && (p.getType() == plat.getType())){
 							intersection = true;
 							if(p.getX() < plat.getX()){
 								newX = p.getX();
@@ -52,13 +53,16 @@ public class WorldBuilder {
 							newp.setWidth(newWidth);
 							oldp = p;
 						}//endif
+						if(p.intersects(plat) && (p.getType() != plat.getType())){
+							diffIntersection = true;
+						}
 					}//endfor
 					if(intersection){
 						platforms.remove(oldp);
 						platforms.add(newp);
 					}
 				}
-				if(!intersection || platforms.isEmpty()){
+				if((!intersection && !diffIntersection) || platforms.isEmpty()){
 					platforms.add(plat);
 				}//endif
 			}//endfori
