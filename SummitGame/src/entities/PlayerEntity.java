@@ -257,8 +257,8 @@ public class PlayerEntity implements Entity {
 			
 		}
 		if(this.id == 2){
-			if (Keyboard.isKeyDown(Keyboard.KEY_A)) x -= 0.2f * delta;
-			if (Keyboard.isKeyDown(Keyboard.KEY_D)) x += 0.2f * delta;
+			if (Keyboard.isKeyDown(Keyboard.KEY_A)) x -= this.xvel * delta;
+			if (Keyboard.isKeyDown(Keyboard.KEY_D)) x += this.xvel * delta;
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_W) && !this.isJumping() && !this.isFalling()) this.jump();
 			
