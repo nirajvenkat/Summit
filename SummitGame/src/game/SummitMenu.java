@@ -32,6 +32,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	Preferences prefs;
 	boolean alt_down = false;
 	Clip clip;
+	Icon gifIcon;
 	
 	public SummitMenu()
 	{
@@ -74,7 +75,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	    try
 		{
 			URL gifURL = new URL("https://www.cs.purdue.edu/homes/scdickso/sprite.gif");
-	        Icon gifIcon = new ImageIcon(gifURL);
+	        gifIcon = new ImageIcon(gifURL);
 	        JLabel gifLabel = new JLabel(gifIcon);
 	        gifLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	        add(gifLabel, BorderLayout.NORTH);
@@ -157,14 +158,22 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 			int height = prefs.getInt("HEIGHT", DEFAULT_SCREEN_HEIGHT);
 			int fps = prefs.getInt("FPS", DEFAULT_FRAMES_PER_SECOND);
 			
+			String[] buttons = { "One Player", "Two Players (Local)" };    
+			int returnValue = 0;
+			returnValue = JOptionPane.showOptionDialog(null, "Please Select Game Mode", "Play Game",
+			        JOptionPane.PLAIN_MESSAGE, 0, gifIcon, buttons, buttons[0]);
+			
+			if(returnValue < 0) returnValue = 0;
+			
 			if(alt_down)
 			{
 				OGLRenderer game = new OGLRenderer(width, height, fps);
-				game.start(2);
+				game.start((returnValue + 1));
 			}
 			else
 			{
-				
+				OGLRenderer game = new OGLRenderer(width, height, fps);
+				game.start((returnValue + 1));
 			}
 		}
 		else if(e.getSource().equals(view_scores))

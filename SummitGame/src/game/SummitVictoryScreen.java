@@ -57,6 +57,7 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 	    }
 	    
 	    JPanel playerPanel = new JPanel(new GridLayout(players.size(), 3));
+	    //System.out.println(players.size());
 	    playerPanel.setOpaque(false);
 	    
 	    
@@ -64,37 +65,50 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 	    entities.PlayerEntity winner = players.get(0);
 	    
 	    //for(entities.PlayerEntity player : players)
+		    for(entities.PlayerEntity player : players)
+		    {
+		    	
+		    	if(player.getScore() > winner.getScore())
+		    	{
+		    		winner = player;
+		    	}
+		    }
+	    
 	    for(entities.PlayerEntity player : players)
 	    {
-	    	
-	    	if(player.getScore() > winner.getScore())
-	    	{
-	    		winner = player;
-	    	}
-	    	else
-	    	{
-	    		playerPanel.add(new JLabel(""));
+	    		if(player.equals(winner))
+	    		{
+	    			playerPanel.add(new JLabel(new ImageIcon(winner_path)));
+	    		}
+	    		else
+	    		{
+	    			playerPanel.add(new JLabel(""));
+	    		}
+	    		
 	    		JLabel tmp_player = new JLabel("Player " + player.getID());
+	    		//System.out.println(tmp_player.getText());
 	    		tmp_player.setForeground(foregroundColor);
 	    		tmp_player.setFont(menuFont);
 	    		playerPanel.add(tmp_player);
 	    		JLabel tmp_score = new JLabel(player.getScore() + "");
+	    		//System.out.println(tmp_score.getText());
 	    		tmp_score.setForeground(foregroundColor);
 	    		tmp_score.setFont(menuFont);
 		    	playerPanel.add(tmp_score);
-	    	}
 	    }
 	    
-	    playerPanel.add(new JLabel(new ImageIcon(winner_path)));
+	    /*playerPanel.add(new JLabel(new ImageIcon(winner_path)));
 	    JLabel tmp_player = new JLabel("Player " + winner.getID());
+	    System.out.println(tmp_player.getText());
 	    tmp_player.setForeground(foregroundColor);
 		tmp_player.setFont(menuFont);
 	    playerPanel.add(tmp_player);
 	    JLabel tmp_score = new JLabel(winner.getScore() + "");
+	    System.out.println(tmp_score.getText());
 	    tmp_score.setFont(menuFont);
 	    tmp_score.setForeground(foregroundColor);
 	    tmp_score.setText(winner.getScore() + "");
-    	playerPanel.add(tmp_score);
+    	playerPanel.add(tmp_score);*/
 	    
 	    add(playerPanel, BorderLayout.NORTH);
 	    
@@ -151,11 +165,6 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 	    
 	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    setVisible(true);
-	}
-	
-	public static void main(String args[])
-	{
-		
 	}
 	
 	@Override
