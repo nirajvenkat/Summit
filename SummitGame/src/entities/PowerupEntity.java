@@ -14,7 +14,7 @@ public class PowerupEntity implements Entity {
 	protected Rectangle hitbox = new Rectangle();
 	int type;
 	protected int points;
-	protected final int numTypes = 2;
+	protected final int numTypes = 3;
 	
 	public PowerupEntity(double x, double y){
 		this.x = x;
@@ -30,6 +30,10 @@ public class PowerupEntity implements Entity {
 			
 		case 1:
 			this.points = 4;
+			break;
+			
+		case 2:
+			this.points = 5;
 			break;
 		}
 	}
@@ -63,6 +67,18 @@ public class PowerupEntity implements Entity {
 				glEnd();
 				break;
 			
+			case 2:
+				glBegin(GL_QUADS);
+					glColor3d(0.2, 0, 1);
+					glVertex2d(x, y);
+					glColor3d(0.2, 0, 1);
+					glVertex2d(x + width, y);
+					glColor3d(0.2, 0, 1);
+					glVertex2d(x + width, y + height);
+					glColor3d(0.2, 0, 1);
+					glVertex2d(x, y + height);
+				glEnd();
+				break;
 		}
 	}
 	
@@ -76,6 +92,10 @@ public class PowerupEntity implements Entity {
 				
 			case 1:
 				p.addFallVel(0.05f);
+				break;
+				
+			case 2:
+				p.addXVel(0.02f);
 				break;
 				
 		}

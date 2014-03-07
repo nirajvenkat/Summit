@@ -82,7 +82,7 @@ public class WorldBuilder {
 	
 	public static ArrayList<PowerupEntity> spawnPowerups(){
 		ArrayList<PowerupEntity> powerups = new ArrayList<PowerupEntity>();
-		for(double i = 85; i < OGLRenderer.SCREEN_HEIGHT; i+=75){
+		for(double i = 10; i < OGLRenderer.SCREEN_HEIGHT; i+=44){
 			Random generator = new Random();
 			PowerupEntity pow = new PowerupEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH-10), i);
 			powerups.add(pow);
