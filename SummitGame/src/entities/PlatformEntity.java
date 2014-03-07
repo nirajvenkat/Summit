@@ -5,6 +5,7 @@ import game.OGLRenderer;
 import game.WorldBuilder;
 
 import java.awt.Rectangle;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -225,7 +226,9 @@ public class PlatformEntity implements Entity {
 	@Override
 	public boolean intersects(Entity other) {
 		hitbox.setBounds((int) x, (int) y, (int) width, (int) height);
-		return hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
+		boolean doesIntersect = hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
+		
+		return doesIntersect;
 	}
 	
 	public double intersectsX(Entity other, double oldx, boolean edit){

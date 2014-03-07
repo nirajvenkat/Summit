@@ -1,6 +1,7 @@
 package game;
 
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,6 +9,10 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import org.lwjgl.BufferUtils;
 import org.newdawn.slick.opengl.PNGDecoder;
@@ -154,5 +159,21 @@ public class WorldBuilder {
 		}
 		
 		return null;
+	}
+	
+	public static void playSound(File f) 
+	{
+	    try 
+	    {
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(f.getAbsoluteFile());
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(audioInputStream);
+	        clip.start();
+	    } 
+	    catch(Exception ex) 
+	    {
+	        System.out.println("Error with playing sound.");
+	        ex.printStackTrace();
+	    }
 	}
 }

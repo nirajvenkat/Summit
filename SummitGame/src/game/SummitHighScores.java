@@ -28,7 +28,7 @@ public class SummitHighScores extends JFrame implements ActionListener
 		int num = 1;
 		for(String score : scores)
 		{
-			String[] entry = score.split(":");
+			String[] entry = score.split(":");			
 			display_name.setText(display_name.getText() + (num++) + ". " + entry[0] + "<br/>");
 			display_score.setText(display_score.getText() + " " + entry[1] + "<br/>");
 		}

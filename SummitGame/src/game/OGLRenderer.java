@@ -5,6 +5,8 @@ import static org.lwjgl.opengl.ARBTextureRectangle.GL_TEXTURE_RECTANGLE_ARB;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
@@ -87,7 +89,8 @@ public class OGLRenderer {
 		}
 		//TODO Display winner image in Display
 		//TODO check score against database and update
-		System.out.print("player " + winner + " wins!");
+		//System.out.print("player " + winner + " wins!");
+		//SummitVictoryScreen svs = new SummitVictoryScreen(players);
 
 		Display.destroy();
 	}

@@ -30,6 +30,7 @@ public class PlayerEntity implements Entity {
 	private static Sprite currentSprite;
 	private static final String SPRITESHEET_IMAGE_LOCATION = "res/sprites.png";
 	private static final String SPRITESHEET_XML_LOCATION = "res/sprites.xml";
+	boolean surprisePlayed = false;
 
 
 	protected double x, y, width, height;		//player's position and draw box
@@ -190,12 +191,18 @@ public class PlayerEntity implements Entity {
 			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.2f * delta;
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_UP) && !this.isJumping() && !this.isFalling()) this.jump();
+			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && !surprisePlayed) {
+				surprisePlayed = true;
+				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/surprise.wav"));
+			}
+			
 		}
 		if(this.id == 2){
 			if (Keyboard.isKeyDown(Keyboard.KEY_A)) x -= 0.2f * delta;
 			if (Keyboard.isKeyDown(Keyboard.KEY_D)) x += 0.2f * delta;
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_W) && !this.isJumping() && !this.isFalling()) this.jump();
+			
 		}
 		//gravity
 		double newvel = this.getVvel();
@@ -236,6 +243,7 @@ public class PlayerEntity implements Entity {
 							this.setX(x);
 						}
 					}
+					
 				}else{
 					if(this.intersectsX(plat, oldx) != x){
 						x = this.intersectsX(plat, oldx);
@@ -343,7 +351,9 @@ public class PlayerEntity implements Entity {
 	@Override
 	public boolean intersects(Entity other) {
 		hitbox.setBounds((int) x, (int) y, (int) width, (int) height);
-		return hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
+		boolean doesIntersect = hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
+		
+		return doesIntersect;
 	}
 	
 	public double intersectsX(Entity other, double oldx){

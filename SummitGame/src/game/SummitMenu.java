@@ -12,6 +12,7 @@ import java.io.File;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.prefs.*;
 
 public class SummitMenu extends JFrame implements ActionListener, MouseListener, KeyListener
@@ -30,6 +31,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	Font menuFont;
 	Preferences prefs;
 	boolean alt_down = false;
+	Clip clip;
 	
 	public SummitMenu()
 	{
@@ -40,7 +42,19 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 		String background_path = System.getProperty("user.dir") + "/src/game/images/menu.jpg";
 		String logo_path = System.getProperty("user.dir") + "/src/game/images/menu_logo.jpg";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
-	    setLayout(new FlowLayout());    
+	    setLayout(new FlowLayout());
+	    
+	    try 
+	    {
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/src/game/media/sandstorm.wav").getAbsoluteFile());
+	        clip = AudioSystem.getClip();
+	        clip.open(audioInputStream);
+	        clip.start();
+	    }
+	    catch(Exception e)
+	    {
+	    	e.printStackTrace();
+	    }
 	    
 	    menuFont = new Font("Serif", Font.PLAIN, 50); 
 	    try
@@ -135,6 +149,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
+		clip.stop();
 		if(e.getSource().equals(start_game))
 		{
 			prefs = Preferences.userRoot().node(SummitSettings.class.getName());
@@ -145,7 +160,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 			if(alt_down)
 			{
 				OGLRenderer game = new OGLRenderer(width, height, fps);
-				game.start(1);
+				game.start(2);
 			}
 			else
 			{
@@ -175,6 +190,17 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 		else if(e.getSource().equals(view_instructions))
 		{
 			SummitInstructions si = new SummitInstructions(menuFont);
+			
+			/*ArrayList<TestPlayer> players = new ArrayList<TestPlayer>();
+			TestPlayer p1 = new TestPlayer();
+			p1.score = 10;
+			p1.id = 1;
+			TestPlayer p2 = new TestPlayer();
+			p2.score = 15;
+			p2.id = 2;
+			players.add(p1);
+			players.add(p2);
+			SummitVictoryScreen svs = new SummitVictoryScreen(players);*/
 		}
 		else if(e.getSource().equals(view_settings))
 		{
@@ -225,7 +251,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	public void mousePressed(MouseEvent e) 
 	{
 		// TODO Auto-generated method stub
-		playSound(CODE_MOUSE_DOWN);
+		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/down.wav"));
 		if(e.getSource().equals(start_game))
 		{
 			start_game.setForeground(MOUSE_DOWN_COLOR);
@@ -279,7 +305,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	public void mouseEntered(MouseEvent e) 
 	{
 		// TODO Auto-generated method stub
-		playSound(CODE_MOUSE_OVER);
+		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/over.wav"));
 		if(e.getSource().equals(start_game))
 		{
 			start_game.setForeground(MOUSE_OVER_COLOR);
@@ -330,30 +356,6 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 		
 	}
 	
-	public void playSound(int code) 
-	{
-	    try 
-	    {
-	    	File f = null;
-	    	switch(code)
-	    	{
-	    	case CODE_MOUSE_OVER:
-	    		f = new File(System.getProperty("user.dir") + "/src/game/media/over.wav");
-	    		break;
-	    	case CODE_MOUSE_DOWN:
-	    		f = new File(System.getProperty("user.dir") + "/src/game/media/down.wav");
-	    		break;
-	    	}
-	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(f.getAbsoluteFile());
-	        Clip clip = AudioSystem.getClip();
-	        clip.open(audioInputStream);
-	        clip.start();
-	    } 
-	    catch(Exception ex) 
-	    {
-	        System.out.println("Error with playing sound.");
-	        ex.printStackTrace();
-	    }
-	}
+	
 
 }
