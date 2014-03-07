@@ -1,6 +1,7 @@
 package game;
 
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,6 +9,10 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import org.lwjgl.BufferUtils;
 import org.newdawn.slick.opengl.PNGDecoder;
@@ -34,12 +39,13 @@ public class WorldBuilder {
 				Random generator = new Random();
 				PlatformEntity plat = new PlatformEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH-20), i);
 				boolean intersection = false;
+				boolean diffIntersection = false;
 				if(!platforms.isEmpty()){
 					PlatformEntity newp = new PlatformEntity(0,0);
 					PlatformEntity oldp = new PlatformEntity(0,0);
 					double newX, newWidth;
 					for(PlatformEntity p : platforms){
-						if(p.intersects(plat)){
+						if(p.intersects(plat) && (p.getType() == plat.getType())){
 							intersection = true;
 							if(p.getX() < plat.getX()){
 								newX = p.getX();
@@ -52,13 +58,16 @@ public class WorldBuilder {
 							newp.setWidth(newWidth);
 							oldp = p;
 						}//endif
+						if(p.intersects(plat) && (p.getType() != plat.getType())){
+							diffIntersection = true;
+						}
 					}//endfor
 					if(intersection){
 						platforms.remove(oldp);
 						platforms.add(newp);
 					}
 				}
-				if(!intersection || platforms.isEmpty()){
+				if((!intersection && !diffIntersection) || platforms.isEmpty()){
 					platforms.add(plat);
 				}//endif
 			}//endfori
@@ -73,7 +82,7 @@ public class WorldBuilder {
 	
 	public static ArrayList<PowerupEntity> spawnPowerups(){
 		ArrayList<PowerupEntity> powerups = new ArrayList<PowerupEntity>();
-		for(double i = 85; i < OGLRenderer.SCREEN_HEIGHT; i+=75){
+		for(double i = 10; i < OGLRenderer.SCREEN_HEIGHT; i+=44){
 			Random generator = new Random();
 			PowerupEntity pow = new PowerupEntity(generator.nextInt(OGLRenderer.SCREEN_WIDTH-10), i);
 			powerups.add(pow);
@@ -150,5 +159,21 @@ public class WorldBuilder {
 		}
 		
 		return null;
+	}
+	
+	public static void playSound(File f) 
+	{
+	    try 
+	    {
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(f.getAbsoluteFile());
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(audioInputStream);
+	        clip.start();
+	    } 
+	    catch(Exception ex) 
+	    {
+	        System.out.println("Error with playing sound.");
+	        ex.printStackTrace();
+	    }
 	}
 }

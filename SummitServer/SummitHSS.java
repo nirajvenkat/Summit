@@ -84,7 +84,7 @@ public class SummitHSS
 				String data[] = raw.split(";");
 				if(data[0].equals("GET"))
 				{
-					String query = "SELECT name, score FROM highScores ORDER BY score ASC";
+					String query = "SELECT name, score FROM highScores ORDER BY score DESC";
 					ArrayList<String> highScores;
 					highScores = dbc.query(query);
 					String result = "";
@@ -101,14 +101,15 @@ public class SummitHSS
 				{
 					double time = Double.parseDouble(data[1]);
 					
-					String query = "SELECT score FROM highScores ORDER BY score DESC";
+					String query = "SELECT score FROM highScores ORDER BY score ASC";
 					ArrayList<String> highScores;
 					highScores = dbc.query(query);
-					System.out.println(highScores.size() + "");
+					//System.out.println(highScores.size() + "");
 
 					if(highScores.size() >= (MAX_HIGH_SCORES * 2))
 					{
-						if(time < Double.parseDouble(highScores.get(0).replace("SCORE: ", "")))
+						//System.out.println(time + "\n" + highScores.get(highScores.size()-1));
+						if(time > Double.parseDouble(highScores.get(0).replace("SCORE: ", "")))
 						{
 							query = "DELETE FROM highScores WHERE score=" + highScores.get(0).replace("SCORE: ", "");
 							dbc.query(query);

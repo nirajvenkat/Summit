@@ -5,6 +5,8 @@ import static org.lwjgl.opengl.ARBTextureRectangle.GL_TEXTURE_RECTANGLE_ARB;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
@@ -28,6 +30,7 @@ public class OGLRenderer {
 
 	/** is VSync Enabled */
 	boolean vsync;
+	int frames = 60;
 
 	public static int SCREEN_WIDTH = 1024;
 	public static int SCREEN_HEIGHT = 768;
@@ -41,6 +44,18 @@ public class OGLRenderer {
 	private ArrayList<PlayerEntity> players;
 	private static int winner;
 
+	public OGLRenderer(int width, int height, int frames)
+	{
+		SCREEN_WIDTH = width;
+		SCREEN_HEIGHT = height;
+		this.frames = frames;
+	}
+	
+	public OGLRenderer()
+	{
+		super();
+	}
+	
 	public void start(int np) {
 		try {
 			setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, true);
@@ -70,11 +85,12 @@ public class OGLRenderer {
 			renderGL();
 
 			Display.update();
-			Display.sync(60); // cap fps to 60fps
+			Display.sync(frames); // cap fps to 60fps
 		}
 		//TODO Display winner image in Display
 		//TODO check score against database and update
-		System.out.print("player " + winner + " wins!");
+		//System.out.print("player " + winner + " wins!");
+		SummitVictoryScreen svs = new SummitVictoryScreen(players);
 
 		Display.destroy();
 	}
@@ -88,6 +104,10 @@ public class OGLRenderer {
 			if(winner != 0){
 				break;
 			}
+		}
+		
+		for(PlatformEntity plat : platforms){
+			plat.update(platforms, delta);
 		}
 		
 		//TODO collision detection between players
@@ -253,10 +273,10 @@ public class OGLRenderer {
 		}
 	}
 
-	public static void main(String[] argv) {
+	/*public static void main(String[] argv) {
 		//TODO make a start screen
 		//TODO connect to the High Score Database
 		OGLRenderer fullscreenExample = new OGLRenderer();
 		fullscreenExample.start(1);
-	}
+	}*/
 }
