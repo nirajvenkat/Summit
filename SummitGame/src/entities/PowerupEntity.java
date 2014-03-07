@@ -13,6 +13,7 @@ public class PowerupEntity implements Entity {
 	protected double x, y, width, height;
 	protected Rectangle hitbox = new Rectangle();
 	int type;
+	protected int points;
 	protected final int numTypes = 2;
 	
 	public PowerupEntity(double x, double y){
@@ -22,6 +23,15 @@ public class PowerupEntity implements Entity {
 		this.height = 10;
 		Random generator = new Random();
 		this.type = generator.nextInt(numTypes);
+		switch(this.type){
+		case 0:
+			this.points = 3;
+			break;
+			
+		case 1:
+			this.points = 4;
+			break;
+		}
 	}
 	
 	@Override
@@ -58,6 +68,7 @@ public class PowerupEntity implements Entity {
 	
 	public void updateStats(PlayerEntity p){
 		//TODO update the player's stats
+		p.addPoints(this.points);
 		switch(this.type){
 			case 0:
 				p.addJumpVel(0.15f);

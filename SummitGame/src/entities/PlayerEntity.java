@@ -38,6 +38,7 @@ public class PlayerEntity implements Entity {
 	protected Rectangle hitbox = new Rectangle();//player's hitbox
 	protected boolean jumping, falling;			//whether the player is falling or jumping
 	protected int id;							//player's identifying number
+	protected int score;
 
 	public PlayerEntity(double x, double y, int id) {
 		this.x = x;
@@ -45,6 +46,7 @@ public class PlayerEntity implements Entity {
 		this.width = 0;
 		this.height = 0;
 		this.id = id;
+		this.score = 0;
 
 		spritesheet = WorldBuilder.glLoadLinearPNG(SPRITESHEET_IMAGE_LOCATION);
 		SAXBuilder builder = new SAXBuilder();
@@ -117,6 +119,14 @@ public class PlayerEntity implements Entity {
 		if(this.fallvel < -0.1f){
 			this.fallvel += newvel;
 		}
+	}
+	
+	public void addPoints(int points){
+		this.score += points;
+	}
+	
+	public int getScore(){
+		return this.score;
 	}
 
 	@Override
