@@ -338,12 +338,12 @@ public class PlayerEntity implements Entity {
 	
 	public double intersectsX(Entity other, double oldx){
 		//check if lagged or moved too fast
-		if(oldx < other.getX() && this.x > other.getX()){
+		/*if(oldx < other.getX() && this.x > other.getX()){
 			return other.getX() - this.width;
 		}
 		if(oldx > other.getX()+other.getWidth() && this.x < other.getX()+other.getWidth()){
 			return other.getX() + other.getWidth();
-		}
+		}*/
 		//check if player is inbetween other
 		if(other.getX() < this.x && (other.getX()+other.getWidth()) > (this.x+this.width)){
 			return this.x;
@@ -360,12 +360,12 @@ public class PlayerEntity implements Entity {
 	}
 	
 	public double intersectsY(Entity other, double oldy){
-		if(oldy < other.getY() && this.y > other.getY()){
+		/*if(oldy < other.getY() && this.y > other.getY()){
 			return other.getY() - this.height;
 		}
 		if(oldy > other.getY()+other.getHeight() && this.y < other.getY()+other.getHeight()){
 			return other.getY() + other.getHeight();
-		}
+		}*/
 		if(other.getY() < this.y && (other.getY()+other.getHeight()) > (this.y+this.height)){
 			return this.y;
 		}
