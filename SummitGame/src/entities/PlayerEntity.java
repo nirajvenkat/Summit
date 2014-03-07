@@ -134,9 +134,9 @@ public class PlayerEntity implements Entity {
 	}
 	
 	public void addFallVel(double newvel){
-		if(this.fallvel < -0.1f){
+		//if(this.fallvel < -0.1f){
 			this.fallvel += newvel;
-		}
+		//}
 	}
 	
 	public void addXVel(double newvel){
