@@ -13,6 +13,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.prefs.*;
 
 public class SummitMenu extends JFrame implements ActionListener, MouseListener, KeyListener
@@ -26,6 +27,9 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	public static final int DEFAULT_SCREEN_WIDTH = 1024;
 	public static final int DEFAULT_SCREEN_HEIGHT = 768;
 	public static final int DEFAULT_FRAMES_PER_SECOND = 60;
+	public static final int SHAKE_DURATION = 3000;
+	public static final int UPDATE_TIME = 5;
+	public static final boolean DO_SHAKE = true;
 	
 	JButton start_game, exit_game, view_scores, view_instructions, view_settings;
 	Font menuFont;
@@ -33,6 +37,10 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	boolean alt_down = false;
 	Clip clip;
 	Icon gifIcon;
+	Point primaryLocation;
+    long startTime;
+    Timer time;
+    ActionTime timeListener = new ActionTime();
 	
 	public SummitMenu()
 	{
@@ -139,6 +147,8 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		
+		if(DO_SHAKE) startShake();
 	}
 	
 	public static void main(String args[])
@@ -309,6 +319,59 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 			view_settings.setForeground(MOUSE_OVER_COLOR);
 		}
 	}
+	
+	public void startShake()
+    {
+        primaryLocation = getLocation();
+        startTime = System.currentTimeMillis();
+        time= new Timer(UPDATE_TIME,timeListener);
+        time.start();
+    }
+     
+    public void stopShake()
+    {
+        time.stop();
+        setLocation(primaryLocation);
+        setVisible(true);
+        repaint();
+    }
+     
+    private class ActionTime implements ActionListener
+    {
+         private int xOffset, yOffset;
+
+        @Override
+         public void actionPerformed(ActionEvent e)
+         {
+             long elapsedTime = System.currentTimeMillis() - startTime;
+             Random r = new Random();
+             int op = r.nextInt(5);
+              
+             if ( op > 0)
+             {
+                
+                xOffset = primaryLocation.x + (r.nextInt(20));
+                yOffset = primaryLocation.y + (r.nextInt(20));
+                setLocation(xOffset,yOffset);
+                setVisible(false);                
+                repaint();
+             }
+             else
+             {
+                
+                xOffset = primaryLocation.x - (r.nextInt(20));
+                yOffset = primaryLocation.y - (r.nextInt(20));
+                setLocation(xOffset,yOffset);
+                setVisible(true);
+                repaint();
+             }
+             
+             if(elapsedTime > SHAKE_DURATION)
+             {   
+                stopShake();
+             }
+         }
+    }
 
 	@Override
 	public void mouseEntered(MouseEvent e) 
