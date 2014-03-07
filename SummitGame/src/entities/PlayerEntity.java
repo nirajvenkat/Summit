@@ -146,7 +146,7 @@ public class PlayerEntity implements Entity {
 	}
 	
 	public void addPoints(int points){
-		this.score += points;
+		this.score = points;
 	}
 	
 	public int getScore(){
