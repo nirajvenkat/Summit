@@ -38,9 +38,9 @@ public class PlayerEntity implements Entity {
 	private static Sprite currentSprite;
 	private String SPRITESHEET_IMAGE_LOCATION;
 	private static final String SPRITESHEET_XML_LOCATION = "res/spriteNew.xml";
-	boolean surprisePlayed = false;
 	private static long lastTime;
 
+	boolean surprisePlayed = false;
 
 	protected double x, y, width, height;		//player's position and draw box
 	protected double vvel;						//player's vertical velocity
@@ -67,21 +67,21 @@ public class PlayerEntity implements Entity {
         font = new UnicodeFont(awtFont, 128, false, false);
         */
 		
-		switch (id){
+		switch (this.id){
 			case 1:
-				SPRITESHEET_IMAGE_LOCATION = "res/Greenfinal.png";
+				this.SPRITESHEET_IMAGE_LOCATION = "res/Greenfinal.png";
 				break;
 			case 2:
-				SPRITESHEET_IMAGE_LOCATION = "res/Redfinal.png";
+				this.SPRITESHEET_IMAGE_LOCATION = "res/Redfinal.png";
 				break;
 			case 3:
-				SPRITESHEET_IMAGE_LOCATION = "res/Bluefinal.png";
+				this.SPRITESHEET_IMAGE_LOCATION = "res/Bluefinal.png";
 				break;
 			case 4:
-				SPRITESHEET_IMAGE_LOCATION = "res/Yellowfinal.png";
+				this.SPRITESHEET_IMAGE_LOCATION = "res/Yellowfinal.png";
 				break;
 			default:
-				SPRITESHEET_IMAGE_LOCATION = "res/Greenfinal.png";
+				this.SPRITESHEET_IMAGE_LOCATION = "res/Greenfinal.png";
 				break;
 		}
 		
