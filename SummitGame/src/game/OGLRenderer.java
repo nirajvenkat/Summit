@@ -236,24 +236,24 @@ public class OGLRenderer {
 
 	public void renderGL() {
 		// Clear The Screen And The Depth Buffer
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 
 		GL11.glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
 
 		//Background texture
-		Texture bgtex = WorldBuilder.loadTexture("res/puck.png");
-		bgtex.bind();
-
-		glBegin(GL_QUADS);
-			glTexCoord2f(0, 1);
-			glVertex2d(0, 0);
-			glTexCoord2f(1, 1);
-			glVertex2d(SCREEN_WIDTH, 0);
-			glTexCoord2f(1, 0);
-			glVertex2d(SCREEN_WIDTH, SCREEN_HEIGHT);
-			glTexCoord2f(0, 0);
-			glVertex2d(0, SCREEN_HEIGHT);
-		glEnd();
+//		Texture bgtex = WorldBuilder.loadTexture("res/background.png");
+//		bgtex.bind();
+//
+//		glBegin(GL_QUADS);
+//			glTexCoord2f(0, 1);
+//			glVertex2d(0, 0);
+//			glTexCoord2f(1, 1);
+//			glVertex2d(SCREEN_WIDTH, 0);
+//			glTexCoord2f(1, 0);
+//			glVertex2d(SCREEN_WIDTH, SCREEN_HEIGHT);
+//			glTexCoord2f(0, 0);
+//			glVertex2d(0, SCREEN_HEIGHT);
+//		glEnd();
 
 		// draw platforms
 		for(PlatformEntity plat : platforms){
