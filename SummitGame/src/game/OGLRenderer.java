@@ -87,8 +87,6 @@ public class OGLRenderer {
 			Display.update();
 			Display.sync(frames); // cap fps to 60fps
 		}
-		//TODO Display winner image in Display
-		//TODO check score against database and update
 		//System.out.print("player " + winner + " wins!");
 		SummitVictoryScreen svs = new SummitVictoryScreen(players);
 
@@ -98,7 +96,6 @@ public class OGLRenderer {
 	public void update(int delta) {
 		// rotate quad
 		//		rotation += 0.15f * delta;
-		//TODO get two players working via networking
 		for(PlayerEntity p : players){
 			winner = p.update(platforms, powerups, delta);
 			if(winner != 0){
@@ -109,8 +106,6 @@ public class OGLRenderer {
 		for(PlatformEntity plat : platforms){
 			plat.update(platforms, delta);
 		}
-		
-		//TODO collision detection between players
 		
 		//		while (Keyboard.next()) {
 		//		    if (Keyboard.getEventKeyState()) {
@@ -274,8 +269,6 @@ public class OGLRenderer {
 	}
 
 	/*public static void main(String[] argv) {
-		//TODO make a start screen
-		//TODO connect to the High Score Database
 		OGLRenderer fullscreenExample = new OGLRenderer();
 		fullscreenExample.start(1);
 	}*/
