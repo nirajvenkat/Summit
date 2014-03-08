@@ -269,7 +269,10 @@ public class PlayerEntity implements Entity {
 			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= this.xvel * delta;
 			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += this.xvel * delta;
 
-			if (Keyboard.isKeyDown(Keyboard.KEY_UP) && !this.isJumping() && !this.isFalling()) this.jump();
+			if (Keyboard.isKeyDown(Keyboard.KEY_UP) && !this.isJumping() && !this.isFalling()){
+				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/jump.wav"));
+				this.jump();
+			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && !surprisePlayed) {
 				surprisePlayed = true;
 				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/surprise.wav"));
@@ -280,7 +283,10 @@ public class PlayerEntity implements Entity {
 			if (Keyboard.isKeyDown(Keyboard.KEY_A)) x -= this.xvel * delta;
 			if (Keyboard.isKeyDown(Keyboard.KEY_D)) x += this.xvel * delta;
 
-			if (Keyboard.isKeyDown(Keyboard.KEY_W) && !this.isJumping() && !this.isFalling()) this.jump();
+			if (Keyboard.isKeyDown(Keyboard.KEY_W) && !this.isJumping() && !this.isFalling()){
+				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/jump.wav"));
+				this.jump();
+			}
 			
 		}
 		//gravity
@@ -331,6 +337,11 @@ public class PlayerEntity implements Entity {
 				}
 			}
 		}
+		
+		//play landing sound
+		if(this.vvel == -0.01f && newvel < this.vvel){
+			WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/land.wav"));
+		}
 
 		// keep player on the screen
 		if (x < 0) x = 0;
@@ -346,6 +357,7 @@ public class PlayerEntity implements Entity {
 		for(PowerupEntity pow : powerups){
 			if(this.intersects(pow)){
 				toRemove = pow;
+				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/powerup.wav"));
 			}
 		}
 		if(toRemove != null){
