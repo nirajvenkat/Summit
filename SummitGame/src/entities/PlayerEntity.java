@@ -36,8 +36,8 @@ public class PlayerEntity implements Entity {
 	private static int spriteNo;
 	private static final Map<String, Sprite> spriteMap = new HashMap<String, Sprite>();
 	private static Sprite currentSprite;
-	private static final String SPRITESHEET_IMAGE_LOCATION = "res/sprites.png";
-	private static final String SPRITESHEET_XML_LOCATION = "res/sprites.xml";
+	private static String SPRITESHEET_IMAGE_LOCATION;
+	private static final String SPRITESHEET_XML_LOCATION = "res/spriteNew.xml";
 	boolean surprisePlayed = false;
 
 
@@ -65,7 +65,25 @@ public class PlayerEntity implements Entity {
         Font awtFont = new Font("Serif", Font.BOLD,50);
         font = new UnicodeFont(awtFont, 128, false, false);
         */
-
+		
+		switch (id){
+			case 1:
+				SPRITESHEET_IMAGE_LOCATION = "res/Greenfinal.png";
+				break;
+			case 2:
+				SPRITESHEET_IMAGE_LOCATION = "res/Redfinal.png";
+				break;
+			case 3:
+				SPRITESHEET_IMAGE_LOCATION = "res/Bluefinal.png";
+				break;
+			case 4:
+				SPRITESHEET_IMAGE_LOCATION = "res/Yellowfinal.png";
+				break;
+			default:
+				SPRITESHEET_IMAGE_LOCATION = "res/Greenfinal.png";
+				break;
+		}
+		
 		spritesheet = WorldBuilder.glLoadLinearPNG(SPRITESHEET_IMAGE_LOCATION);
 		SAXBuilder builder = new SAXBuilder();
 		try {
@@ -190,13 +208,13 @@ public class PlayerEntity implements Entity {
 		int y2val = currentSprite.getY() + currentSprite.getHeight();
 
 		glBegin(GL_QUADS);
-			glTexCoord2f(xval, yval);
-			glVertex2d(x, y);
 			glTexCoord2f(xval, y2val);
-			glVertex2d(x + width, y);
+			glVertex2d(x, y);
 			glTexCoord2f(x2val, y2val);
-			glVertex2d(x + width, y + height);
+			glVertex2d(x + width, y);
 			glTexCoord2f(x2val, yval);
+			glVertex2d(x + width, y + height);
+			glTexCoord2f(xval, yval);
 			glVertex2d(x, y + height);
 		glEnd();
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);

@@ -29,7 +29,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	public static final int DEFAULT_FRAMES_PER_SECOND = 60;
 	public static final int SHAKE_DURATION = 3000;
 	public static final int UPDATE_TIME = 5;
-	public static final boolean DO_SHAKE = true;
+	public static final boolean DO_SHAKE = false;
 	
 	JButton start_game, exit_game, view_scores, view_instructions, view_settings;
 	Font menuFont;
