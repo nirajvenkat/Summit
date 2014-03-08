@@ -6,33 +6,45 @@ import java.awt.event.*;
 
 public class SummitHighScores extends JFrame implements ActionListener
 {
+	//Color for high scores
 	public static final Color foregroundColor = Color.decode("#FFCC00");
+	
 	JButton close;
 	JFrame frame;
+	String data;
+	Font font;
 	
 	public SummitHighScores(String data, Font font)
 	{
+		this.data = data;
+		this.font = font;
 		frame = this;
+		
+		//Load background image
 		setLayout(new BorderLayout());
 		String background_path = System.getProperty("user.dir") + "/src/game/images/highscores.png";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 		setLayout(new FlowLayout());
+		
+		//JFram setup
 		String scores[] = data.split(";");
 		font = font.deriveFont(Font.BOLD,15);
 		setSize(500,250);
 		setTitle("Summit Wall of Champions");
+		
+		//Format high scores string into 2 columns
 		JLabel display_name = new JLabel("<html>");
 		display_name.setForeground(foregroundColor);
 		JLabel display_score = new JLabel("<html>");
 		display_score.setForeground(foregroundColor);
-		int num = 1;
-		for(String score : scores)
+		int num = 0; //Initial index for numbering
+		for(int i = scores.length-1; i >= 0; i--)
 		{
-			String[] entry = score.split(":");			
+			String[] entry = scores[i].split(":");			
 			display_name.setText(display_name.getText() + (num++) + ". " + entry[0] + "<br/>");
 			display_score.setText(display_score.getText() + " " + entry[1] + "<br/>");
 		}
-		while(num <= 10)
+		while(num < 10) //Finish numbering up until 10.
 		{
 			display_name.setText(display_name.getText() + (num++) + ".<br/>");
 			display_score.setText(display_score.getText() + "<br/>");
@@ -41,6 +53,8 @@ public class SummitHighScores extends JFrame implements ActionListener
 		display_name.setFont(font);
 		display_score.setText(display_score.getText() + "</html>");
 		display_score.setFont(font);
+		
+		//Setup and display data in JFrame
 		JPanel scorePanel = new JPanel(new GridLayout(1,2,20,20));
 		scorePanel.setOpaque(false);
 		scorePanel.add(display_name);
@@ -59,11 +73,10 @@ public class SummitHighScores extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// TODO Auto-generated method stub
+		//Closes window on button press with dispose()
 		if(e.getSource().equals(close))
 		{
-			setVisible(false);
-			dispose();
+			SummitHighScores shs = new SummitHighScores(data, font);
 		}
 		
 	}

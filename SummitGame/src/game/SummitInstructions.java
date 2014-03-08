@@ -8,12 +8,16 @@ import java.awt.event.*;
 public class SummitInstructions extends JFrame implements ActionListener
 {
 	JButton close;
+	Font font;
 	
 	public SummitInstructions(Font font)
 	{
+		this.font = font;
 		setTitle("How To Play");
 		font = font.deriveFont(Font.BOLD, 17);
 		setSize(870,500);
+		
+		//Load background
 		setLayout(new BorderLayout());
 		String background_path = System.getProperty("user.dir") + "/src/game/images/instructions.jpg";
 		String wsad_path = System.getProperty("user.dir") + "/src/game/images/wsad_keys.png";
@@ -21,6 +25,7 @@ public class SummitInstructions extends JFrame implements ActionListener
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 		setLayout(new BorderLayout());
 		
+		//Setup JFrame and JLabels
 		JPanel instructions_panel = new JPanel(new BorderLayout());
 		instructions_panel.setOpaque(false);
 		instructions_panel.add(new JLabel(new ImageIcon(arrow_path)), BorderLayout.NORTH);
@@ -46,11 +51,10 @@ public class SummitInstructions extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// TODO Auto-generated method stub
+		// Close window
 		if(e.getSource().equals(close))
 		{
-			setVisible(false);
-			dispose();
+			SummitInstructions si = new SummitInstructions(font);
 		}
 	}
 }

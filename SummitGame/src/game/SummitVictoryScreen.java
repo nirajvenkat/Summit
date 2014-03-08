@@ -20,27 +20,34 @@ import java.util.ArrayList;
 public class SummitVictoryScreen extends JFrame implements ActionListener
 {
 	public static final Color foregroundColor = Color.decode("#FFCC00");
-	public static final int MAX_NAME_LENGTH = 11;
+	public static final int MAX_NAME_LENGTH = 11; //Max length of name. Preserves formatting in HighScores
 	
 	Font menuFont;
 	JButton close;
 	JTextField name;
+	
+	//Connection to high scores server
 	Socket s;
 	DataOutputStream out;
 	DataInputStream in;
-	boolean isHighScore = false;
 	
-	//public SummitVictoryScreen(ArrayList<entities.PlayerEntity> players)
+	boolean isHighScore = false;
+	ArrayList<entities.PlayerEntity> players; //List of players
+	
 	public SummitVictoryScreen(ArrayList<entities.PlayerEntity> players)
 	{
+		this.players = players;
 		setResizable(false);
 		setSize(700, 125);
+		
+		//Load background image
 		setLayout(new BorderLayout());
 		String background_path = System.getProperty("user.dir") + "/src/game/images/highscores.png";
 		String winner_path = System.getProperty("user.dir") + "/src/game/images/winner.png";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 		setLayout(new BorderLayout());
 		
+		//Get menu font from web
 		menuFont = new Font("Serif", Font.PLAIN, 50); 
 	    try
 	    {
@@ -56,15 +63,14 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 	    	menuFont = new Font("Serif", Font.PLAIN, 50);
 	    }
 	    
+	    //Setup JFrame
 	    JPanel playerPanel = new JPanel(new GridLayout(players.size(), 3));
-	    //System.out.println(players.size());
 	    playerPanel.setOpaque(false);
 	    
-	    
-	    //entities.PlayerEntity winner = players.get(0);
 	    entities.PlayerEntity winner = players.get(0);
+	    entities.PlayerEntity other = players.get(0);
 	    
-	    //for(entities.PlayerEntity player : players)
+	    	//Loop through players and choose player with highest score
 		    for(entities.PlayerEntity player : players)
 		    {
 		    	
@@ -72,48 +78,39 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 		    	{
 		    		winner = player;
 		    	}
+		    	else
+		    	{
+		    		other = player;
+		    	}
 		    }
 	    
+		//Display user information in JLabel
 	    for(entities.PlayerEntity player : players)
 	    {
-	    		if(player.equals(winner))
+	    		if(player.equals(winner)) //If user is winner
 	    		{
-	    			playerPanel.add(new JLabel(new ImageIcon(winner_path)));
+	    			playerPanel.add(new JLabel("")); //Display blank label
 	    		}
-	    		else
+	    		else //If user is not winner
 	    		{
-	    			playerPanel.add(new JLabel(""));
+	    			playerPanel.add(new JLabel(new ImageIcon(winner_path))); //Display star
 	    		}
 	    		
+	    		//Add text to JLabel and add to panel
 	    		JLabel tmp_player = new JLabel("Player " + player.getID());
-	    		//System.out.println(tmp_player.getText());
 	    		tmp_player.setForeground(foregroundColor);
 	    		tmp_player.setFont(menuFont);
 	    		playerPanel.add(tmp_player);
 	    		JLabel tmp_score = new JLabel(player.getScore() + "");
-	    		//System.out.println(tmp_score.getText());
 	    		tmp_score.setForeground(foregroundColor);
 	    		tmp_score.setFont(menuFont);
 		    	playerPanel.add(tmp_score);
 	    }
 	    
-	    /*playerPanel.add(new JLabel(new ImageIcon(winner_path)));
-	    JLabel tmp_player = new JLabel("Player " + winner.getID());
-	    System.out.println(tmp_player.getText());
-	    tmp_player.setForeground(foregroundColor);
-		tmp_player.setFont(menuFont);
-	    playerPanel.add(tmp_player);
-	    JLabel tmp_score = new JLabel(winner.getScore() + "");
-	    System.out.println(tmp_score.getText());
-	    tmp_score.setFont(menuFont);
-	    tmp_score.setForeground(foregroundColor);
-	    tmp_score.setText(winner.getScore() + "");
-    	playerPanel.add(tmp_score);*/
-	    
 	    add(playerPanel, BorderLayout.NORTH);
 	    
 	    
-	    try
+	    try //Connect to high scores server and see if winning score is a high score
 	    {
 	    	s = new Socket();
 	    	s.connect(new InetSocketAddress(SummitMenu.SERVER_ADDR, SummitMenu.SERVER_PORT), 3000);
@@ -121,9 +118,11 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 			out = new DataOutputStream(s.getOutputStream());
 			out.writeUTF("PUT;" + winner.getScore());
 			int resp = in.readInt();
-			if(resp == 1)
+			if(resp == 1) //If 1 is returned from server, it's a high score
 			{
-				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/victory.wav"));
+				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/victory.wav")); //YAY VICTORY SOUND
+				
+				//Change JFrame and allow user to enter a name
 				setSize(700, 275);
 				isHighScore = true;
 				name = new JTextField("", MAX_NAME_LENGTH);
@@ -138,7 +137,7 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 				JLabel nameLabel = new JLabel("Your Name: ");
 				nameLabel.setFont(menuFont);
 				nameLabel.setForeground(Color.WHITE);
-				JLabel promptLabel = new JLabel("Player " + winner.getID() + " Has a New High Score!");
+				JLabel promptLabel = new JLabel("Player " + other.getID() + " Has a New High Score!");
 				promptLabel.setFont(menuFont);
 				promptLabel.setForeground(Color.WHITE);
 				inputPanel.add(promptLabel, BorderLayout.NORTH);
@@ -147,7 +146,7 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 				inputPanel.add(close, BorderLayout.SOUTH);
 				add(inputPanel, BorderLayout.SOUTH);
 			}
-			else if(resp == 0)
+			else if(resp == 0) //0 return value means score is not a high score
 			{
 				isHighScore = false;
 				close = new JButton("Close");
@@ -170,21 +169,16 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// TODO Auto-generated method stub
 
-		if(isHighScore)
+		if(isHighScore) //Save score on server on exit if it's a high score
 		{
 			try
 			{
 				String puck = name.getText();
-				System.out.println("Size is " + puck.length());
-				if(puck != null && !puck.isEmpty())
+
+				if(puck != null) //Check if name is null
 				{
-					if(puck.length() > MAX_NAME_LENGTH)
-					{
-						puck = puck.substring(0, MAX_NAME_LENGTH -1 );
-					}
-					out.writeUTF(puck);
+					out.writeUTF(puck); //Write out to server and close connection
 					out.close();
 					in.close();
 					s.close();
@@ -196,8 +190,7 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 			}
 		}
 
-			setVisible(false);
-			dispose();
+			SummitVictoryScreen svs = new SummitVictoryScreen(players); //Finally, close window
 		
 	}
 

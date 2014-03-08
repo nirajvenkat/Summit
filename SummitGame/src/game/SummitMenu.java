@@ -18,42 +18,55 @@ import java.util.prefs.*;
 
 public class SummitMenu extends JFrame implements ActionListener, MouseListener, KeyListener
 {
+	//Colors for mouseover and mousedown on menu items
 	public static final Color MOUSE_OVER_COLOR = Color.decode("#3399FF");
 	public static final Color MOUSE_DOWN_COLOR = Color.decode("#000099");
-	public static final int CODE_MOUSE_DOWN = 1;
-	public static final int CODE_MOUSE_OVER = 2;
+	
+	//Server address and port to connect to high scores server
 	public static final String SERVER_ADDR = "98.226.145.27";
 	public static final int SERVER_PORT = 9998;
+	
+	//Default values for video settings
 	public static final int DEFAULT_SCREEN_WIDTH = 1024;
 	public static final int DEFAULT_SCREEN_HEIGHT = 768;
 	public static final int DEFAULT_FRAMES_PER_SECOND = 60;
+	
+	//Unused. Don't worry about this...
 	public static final int SHAKE_DURATION = 3000;
 	public static final int UPDATE_TIME = 5;
-	public static final boolean DO_SHAKE = true;
+	public static final boolean DO_SHAKE = false;
 	
-	JButton start_game, exit_game, view_scores, view_instructions, view_settings;
-	Font menuFont;
-	Preferences prefs;
-	boolean alt_down = false;
-	Clip clip;
-	Icon gifIcon;
-	Point primaryLocation;
+	JButton start_game, exit_game, view_scores, view_instructions, view_settings; //Buttons for menu items
+	Font menuFont; //Custom font used
+	Preferences prefs; //Preferences object to hold user preferences
+	boolean alt_down = false; //Unused. Don't worry about this
+	Clip clip; //Sound clip to play music and menu effects
+	Icon gifIcon; //Animated UFO sprite
+	
+	//These fields not used. Don't worry about these
+	Point primaryLocation; 
     long startTime;
     Timer time;
     ActionTime timeListener = new ActionTime();
 	
 	public SummitMenu()
 	{
+		//Set window size, title, and resizable value
 		setSize(700,550);
 		setTitle("Summit");
-		setResizable(false);
+		setResizable(true);
+		
+		//Set background image from file
 		setLayout(new BorderLayout());
 		String background_path = System.getProperty("user.dir") + "/src/game/images/menu.jpg";
 		String logo_path = System.getProperty("user.dir") + "/src/game/images/menu_logo.jpg";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 	    setLayout(new FlowLayout());
 	    
-	    try 
+	    //Load preferences
+	    prefs = Preferences.userRoot().node(SummitSettings.class.getName());
+	    
+	    try //Play Sandstorm!
 	    {
 	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/src/game/media/sandstorm.wav").getAbsoluteFile());
 	        clip = AudioSystem.getClip();
@@ -65,6 +78,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	    	e.printStackTrace();
 	    }
 	    
+	    //Load custom menu font from web
 	    menuFont = new Font("Serif", Font.PLAIN, 50); 
 	    try
 	    {
@@ -80,7 +94,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	    	menuFont = new Font("Serif", Font.PLAIN, 50);
 	    }
 	    
-	    try
+	    try //Load animated sprits gif from web
 		{
 			URL gifURL = new URL("https://www.cs.purdue.edu/homes/scdickso/sprite.gif");
 	        gifIcon = new ImageIcon(gifURL);
@@ -93,6 +107,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 			e.printStackTrace();
 		}
 	        
+	    //Set up menu buttons, layout, and appearance
 		start_game = new JButton("Play Game");
 		start_game.setFont(menuFont);
 		start_game.setOpaque(false);
@@ -148,6 +163,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		
+		//Not a thing.
 		if(DO_SHAKE) startShake();
 	}
 	
@@ -158,44 +174,44 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	
 
 	@Override
-	public void actionPerformed(ActionEvent e) 
+	public void actionPerformed(ActionEvent e) //Handles click action for menu items
 	{
-		clip.stop();
-		if(e.getSource().equals(start_game))
+		if(e.getSource().equals(start_game)) //User clicks "Start Game"
 		{
-			prefs = Preferences.userRoot().node(SummitSettings.class.getName());
+			//Load preferences from prefs file
 			int width = prefs.getInt("WIDTH", DEFAULT_SCREEN_WIDTH);
 			int height = prefs.getInt("HEIGHT", DEFAULT_SCREEN_HEIGHT);
 			int fps = prefs.getInt("FPS", DEFAULT_FRAMES_PER_SECOND);
 			
+			//Create dialog with player options
 			String[] buttons = { "One Player", "Two Players (Local)" };    
-			int returnValue = 0;
+			int returnValue = 0; //Initially 0 return value. Can be -1 if user closes dialog box without selecting an option.
 			returnValue = JOptionPane.showOptionDialog(null, "Please Select Game Mode", "Play Game",
 			        JOptionPane.PLAIN_MESSAGE, 0, gifIcon, buttons, buttons[0]);
 			
-			if(returnValue < 0) returnValue = 0;
-			
+			//Start game with number of players specified. OGLRenderer.start(int) takes as an argument the number of players in the game
 			if(alt_down)
 			{
 				OGLRenderer game = new OGLRenderer(width, height, fps);
-				game.start((returnValue + 1));
+				game.start((++returnValue + 1));
 			}
 			else
 			{
 				OGLRenderer game = new OGLRenderer(width, height, fps);
-				game.start((returnValue + 1));
+				game.start((++returnValue + 1));
 			}
 		}
-		else if(e.getSource().equals(view_scores))
+		else if(e.getSource().equals(view_instructions)) //User clicks "View instructions"
 		{
 			try
 			{
+				//Connect to high scores server
 				Socket s = new Socket();
 				s.connect(new InetSocketAddress(SERVER_ADDR, SERVER_PORT), 3000);
 				DataInputStream in = new DataInputStream(s.getInputStream());
 				DataOutputStream out = new DataOutputStream(s.getOutputStream());
-				out.writeUTF("GET");
-				String data = in.readUTF();
+				out.writeUTF("GET"); //GET high scores
+				String data = in.readUTF(); //Server returns data as string
 				out.close();
 				in.close();
 				s.close();
@@ -206,28 +222,21 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 				JOptionPane.showMessageDialog(null, "Error Loading High Scores. Please Try Again Later...");
 			}
 		}
-		else if(e.getSource().equals(view_instructions))
+		else if(e.getSource().equals(view_scores)) //User clicks "View High Scores"
 		{
 			SummitInstructions si = new SummitInstructions(menuFont);
-			
-			/*ArrayList<TestPlayer> players = new ArrayList<TestPlayer>();
-			TestPlayer p1 = new TestPlayer();
-			p1.score = 10;
-			p1.id = 1;
-			TestPlayer p2 = new TestPlayer();
-			p2.score = 15;
-			p2.id = 2;
-			players.add(p1);
-			players.add(p2);
-			SummitVictoryScreen svs = new SummitVictoryScreen(players);*/
 		}
-		else if(e.getSource().equals(view_settings))
+		else if(e.getSource().equals(view_settings)) //User clicks "Settings"
 		{
 			SummitSettings ss = new SummitSettings(menuFont);
 		}
-		else if(e.getSource().equals(exit_game))
+		else if(e.getSource().equals(exit_game)) //User clicks "Exit"
 		{
-			System.exit(0);
+			//Set preferences to default values
+			prefs.putInt("WIDTH", DEFAULT_SCREEN_WIDTH);
+			prefs.putInt("HEIGHT", DEFAULT_SCREEN_HEIGHT);
+			prefs.putInt("FPS", DEFAULT_FRAMES_PER_SECOND);
+			setVisible(false); //Quit program
 		}
 		
 		
@@ -242,7 +251,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	@Override
 	public void keyPressed(KeyEvent e) 
 	{
-		// TODO Auto-generated method stub
+		//Don't worry about this
 		if(e.getKeyCode() == KeyEvent.VK_CONTROL)
 		{
 			alt_down = true;
@@ -253,7 +262,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	@Override
 	public void keyReleased(KeyEvent e) 
 	{
-		// TODO Auto-generated method stub
+		//Don't worry about this
 		if(e.getKeyCode() == KeyEvent.VK_CONTROL)
 		{
 			alt_down = false;
@@ -269,8 +278,10 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	@Override
 	public void mousePressed(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+		//Play sound when user clicks on a menu item
 		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/down.wav"));
+		
+		//Change color when user clicks on menu item
 		if(e.getSource().equals(start_game))
 		{
 			start_game.setForeground(MOUSE_DOWN_COLOR);
@@ -297,7 +308,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	@Override
 	public void mouseReleased(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+		//Change color back to original when user clicks on menu item
 		if(e.getSource().equals(start_game))
 		{
 			start_game.setForeground(MOUSE_OVER_COLOR);
@@ -320,6 +331,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 		}
 	}
 	
+	//Unused
 	public void startShake()
     {
         primaryLocation = getLocation();
@@ -328,6 +340,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
         time.start();
     }
      
+	//Unused
     public void stopShake()
     {
         time.stop();
@@ -336,6 +349,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
         repaint();
     }
      
+    //Unused
     private class ActionTime implements ActionListener
     {
          private int xOffset, yOffset;
@@ -376,7 +390,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	@Override
 	public void mouseEntered(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+		//Change color when user mouses over menu item
 		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/over.wav"));
 		if(e.getSource().equals(start_game))
 		{
@@ -404,26 +418,26 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	@Override
 	public void mouseExited(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+		//Change color back to original when user's mouse exists menu item
 		if(e.getSource().equals(start_game))
 		{
-			start_game.setForeground(Color.BLACK);
+			start_game.setForeground(MOUSE_OVER_COLOR);
 		}
 		else if(e.getSource().equals(exit_game))
 		{
-			exit_game.setForeground(Color.BLACK);
+			exit_game.setForeground(MOUSE_OVER_COLOR);
 		}
 		else if(e.getSource().equals(view_scores))
 		{
-			view_scores.setForeground(Color.BLACK);
+			view_scores.setForeground(MOUSE_OVER_COLOR);
 		}
 		else if(e.getSource().equals(view_instructions))
 		{
-			view_instructions.setForeground(Color.BLACK);
+			view_instructions.setForeground(MOUSE_OVER_COLOR);
 		}
 		else if(e.getSource().equals(view_settings))
 		{
-			view_settings.setForeground(Color.BLACK);
+			view_settings.setForeground(MOUSE_OVER_COLOR);
 		}
 		
 	}
