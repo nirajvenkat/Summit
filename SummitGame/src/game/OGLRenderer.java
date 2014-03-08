@@ -87,8 +87,12 @@ public class OGLRenderer {
 			Display.update();
 			Display.sync(frames); // cap fps to 60fps
 		}
-		//TODO Display winner image in Display
-		//TODO check score against database and update
+		
+		for(PlayerEntity p : players){
+			if(p.getID() == winner){
+				p.addPoints(15);
+			}
+		}
 		//System.out.print("player " + winner + " wins!");
 		//SummitVictoryScreen svs = new SummitVictoryScreen(players);
 

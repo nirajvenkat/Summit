@@ -15,6 +15,7 @@ public class PlatformEntity implements Entity {
 	
 	protected double x, y, width, height;
 	protected Rectangle hitbox = new Rectangle();
+	protected double xvel;
 	protected int type;
 	private boolean up, right, left, down;
 	protected final int numTypes = 2;
@@ -45,12 +46,24 @@ public class PlatformEntity implements Entity {
 		case 1:
 			//moving on x axis
 			this.left = generator.nextBoolean();
-			this.width = 70;
+			this.width = generator.nextDouble()*200;
+			if(this.width < 30){
+				this.width = 30;
+			}
 			this.height = 10;
 			if(this.left){
 				this.right = false;
 			}else{
 				this.right = true;
+			}
+			
+			//set speedbased on height
+			if(this.width < 85){
+				this.xvel = 0.15f;
+			}else if(this.width < 145){
+				this.xvel = 0.22f;
+			}else{
+				this.xvel = 0.3f;
 			}
 			break;
 			
@@ -136,9 +149,9 @@ public class PlatformEntity implements Entity {
 		case 1:
 			//moving on x axis
 			if(this.right){
-				newx += 0.15f * delta;
+				newx += this.xvel * delta;
 			}else{
-				newx -= 0.15f * delta;
+				newx -= this.xvel * delta;
 			}
 			this.setX(newx);
 			
