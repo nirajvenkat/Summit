@@ -36,8 +36,8 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 		setResizable(false);
 		setSize(700, 125);
 		setLayout(new BorderLayout());
-		String background_path = System.getProperty("user.dir") + "/src/game/images/highscores.png";
-		String winner_path = System.getProperty("user.dir") + "/src/game/images/winner.png";
+		String background_path = System.getProperty("user.dir") + "/res/images/highscores.png";
+		String winner_path = System.getProperty("user.dir") + "/res/images/winner.png";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 		setLayout(new BorderLayout());
 		
@@ -123,7 +123,7 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 			int resp = in.readInt();
 			if(resp == 1)
 			{
-				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/victory.wav"));
+				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/victory.wav"));
 				setSize(700, 275);
 				isHighScore = true;
 				name = new JTextField("", MAX_NAME_LENGTH);

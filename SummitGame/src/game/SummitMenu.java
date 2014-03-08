@@ -48,14 +48,14 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 		setTitle("Summit");
 		setResizable(false);
 		setLayout(new BorderLayout());
-		String background_path = System.getProperty("user.dir") + "/src/game/images/menu.jpg";
-		String logo_path = System.getProperty("user.dir") + "/src/game/images/menu_logo.jpg";
+		String background_path = System.getProperty("user.dir") + "/res/images/menu.jpg";
+		String logo_path = System.getProperty("user.dir") + "/res/images/menu_logo.jpg";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 	    setLayout(new FlowLayout());
 	    
 	    try 
 	    {
-	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/src/game/media/sandstorm.wav").getAbsoluteFile());
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/res/media/sandstorm.wav").getAbsoluteFile());
 	        clip = AudioSystem.getClip();
 	        clip.open(audioInputStream);
 	        clip.start();
@@ -270,7 +270,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	public void mousePressed(MouseEvent e) 
 	{
 		// TODO Auto-generated method stub
-		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/down.wav"));
+		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/down.wav"));
 		if(e.getSource().equals(start_game))
 		{
 			start_game.setForeground(MOUSE_DOWN_COLOR);
@@ -377,7 +377,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	public void mouseEntered(MouseEvent e) 
 	{
 		// TODO Auto-generated method stub
-		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/over.wav"));
+		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/over.wav"));
 		if(e.getSource().equals(start_game))
 		{
 			start_game.setForeground(MOUSE_OVER_COLOR);

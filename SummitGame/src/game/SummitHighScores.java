@@ -14,7 +14,7 @@ public class SummitHighScores extends JFrame implements ActionListener
 	{
 		frame = this;
 		setLayout(new BorderLayout());
-		String background_path = System.getProperty("user.dir") + "/src/game/images/highscores.png";
+		String background_path = System.getProperty("user.dir") + "/res/images/highscores.png";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 		setLayout(new FlowLayout());
 		String scores[] = data.split(";");

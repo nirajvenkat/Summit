@@ -238,8 +238,7 @@ public class OGLRenderer {
 		// Clear The Screen And The Depth Buffer
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-		// R,G,B,A Set The Color To Blue One Time Only
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		GL11.glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
 
 		//Background texture
 		Texture bgtex = WorldBuilder.loadTexture("res/puck.png");

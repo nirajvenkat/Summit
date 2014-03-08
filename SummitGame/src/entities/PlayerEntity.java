@@ -36,9 +36,10 @@ public class PlayerEntity implements Entity {
 	private static int spriteNo;
 	private static final Map<String, Sprite> spriteMap = new HashMap<String, Sprite>();
 	private static Sprite currentSprite;
-	private static String SPRITESHEET_IMAGE_LOCATION;
+	private String SPRITESHEET_IMAGE_LOCATION;
 	private static final String SPRITESHEET_XML_LOCATION = "res/spriteNew.xml";
 	boolean surprisePlayed = false;
+	private static long lastTime;
 
 
 	protected double x, y, width, height;		//player's position and draw box
@@ -111,6 +112,7 @@ public class PlayerEntity implements Entity {
 		
 		spriteNo = 1;
 		currentSprite = spriteMap.get(spriteNo + ".png");
+		lastTime = OGLRenderer.getTime();
 
 		this.jumpvel = 2.0f;
 		this.fallvel = -0.35f;
@@ -270,7 +272,7 @@ public class PlayerEntity implements Entity {
 			if (Keyboard.isKeyDown(Keyboard.KEY_UP) && !this.isJumping() && !this.isFalling()) this.jump();
 			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && !surprisePlayed) {
 				surprisePlayed = true;
-				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/surprise.wav"));
+				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/surprise.wav"));
 			}
 			
 		}
@@ -373,9 +375,14 @@ public class PlayerEntity implements Entity {
 	@Override
 	public void update(){
 		//Sprite update code
-		spriteNo++;
-		if(spriteNo == 7) spriteNo = 1;
-		currentSprite = spriteMap.get(spriteNo + ".png");
+		long currTime = OGLRenderer.getTime();
+		if(currTime - lastTime > 100){
+			spriteNo++;
+			if(spriteNo == 7) spriteNo = 1;
+			currentSprite = spriteMap.get(spriteNo + ".png");
+			lastTime = currTime;
+		}
+		
 	}
 
 	@Override
