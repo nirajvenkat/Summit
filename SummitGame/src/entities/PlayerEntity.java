@@ -32,7 +32,7 @@ public class PlayerEntity implements Entity {
 
 
 	//Sprite variables
-	private static int spritesheet;
+	private int spritesheet;
 	private static int spriteNo;
 	private static final Map<String, Sprite> spriteMap = new HashMap<String, Sprite>();
 	private static Sprite currentSprite;
@@ -85,7 +85,7 @@ public class PlayerEntity implements Entity {
 				break;
 		}
 		
-		spritesheet = WorldBuilder.glLoadLinearPNG(SPRITESHEET_IMAGE_LOCATION);
+		this.spritesheet = WorldBuilder.glLoadLinearPNG(SPRITESHEET_IMAGE_LOCATION);
 		SAXBuilder builder = new SAXBuilder();
 		try {
 			Document document = builder.build(new File(SPRITESHEET_XML_LOCATION));
