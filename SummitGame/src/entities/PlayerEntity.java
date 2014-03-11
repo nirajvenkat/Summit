@@ -320,8 +320,9 @@ public class PlayerEntity implements Entity {
 			}
 		}
 		
-		if(){
-			
+		//play landing sound
+		if(this.vvel == -0.01f && newvel < this.vvel){
+			WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/jump.wav"));
 		}
 
 		// keep player on the screen
