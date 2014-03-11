@@ -132,28 +132,6 @@ public class PlatformEntity implements Entity {
 			}
 			this.setX(newx);
 			
-			/*for(PlatformEntity p : platforms){
-				if(this.intersects(p)){
-					if(this.intersectsX(p, oldx, false) != newx){
-						if(this.right && p.type == 1){
-							p.right = false;
-						}else{
-							if(p.type == 1){
-								p.right = true;
-							}
-						}
-						newx = this.intersectsX(p, oldx, true);
-						this.setX(newx);
-					}
-				}
-			}*/
-			if (newx+this.getWidth() < 0){
-				this.right = true;
-			}
-			if ((newx > OGLRenderer.SCREEN_WIDTH)) {
-				this.right = false;
-			}
-			
 			this.setX(newx);
 			break;
 		}//end switch

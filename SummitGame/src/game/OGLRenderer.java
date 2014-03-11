@@ -120,7 +120,6 @@ public class OGLRenderer {
 		//		}
 
 		
-		updateFPS(); // update FPS Counter
 	}
 
 	/**

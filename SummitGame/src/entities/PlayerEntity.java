@@ -251,7 +251,7 @@ public class PlayerEntity implements Entity {
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
 				this.jump();
-				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/land.wav"));
+				//WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/land.wav"));
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 				this.jump();
@@ -264,7 +264,7 @@ public class PlayerEntity implements Entity {
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_W)){
 				this.jump();
-				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/land.wav"));
+				//WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/land.wav"));
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 				this.jump();
@@ -321,14 +321,13 @@ public class PlayerEntity implements Entity {
 		}
 		
 		//play landing sound
-		if(this.vvel == -0.01f && newvel < this.vvel){
+		/*if(this.vvel == -0.01f && newvel < this.vvel){
 			WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/jump.wav"));
-		}
+		}*/
 
 		// keep player on the screen
 		if (x < 0) x = 0;
 		if ((x+this.getWidth()) > OGLRenderer.SCREEN_WIDTH) x = (OGLRenderer.SCREEN_WIDTH-this.getWidth());
-		if (y < 0) y = 10;
 
 		if ((y+this.getHeight()) > OGLRenderer.SCREEN_HEIGHT){
 			return this.id;
