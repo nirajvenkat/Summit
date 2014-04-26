@@ -77,12 +77,12 @@ public class Board {
 	 */
 	public boolean leftClick(int x, int y) {
 		// System.out.println("Clicked: (" + x + ", " + y + ")");
-		hidden[y][x] = false;
-		uncoverCluster(x, y);
 		if (getSpace(x, y) == -1) {
 			myapplet.setClickable(false);
 			return true;
 		}
+		hidden[y][x] = false;
+		uncoverCluster(x, y);
 		return false;
 	}
 
@@ -307,13 +307,21 @@ public class Board {
 	
 	public void setupBoardRandom(int numMines) {
         //edit made here, .9 is too high to like ever encounter
-		if (Math.random() > .2) {
+		//if (Math.random() > .2) {
 			for (int i = 0; i < numMines; i++) {
 				int randomX = (int) (Math.random() * (spaces.length));
 				int randomY = (int) (Math.random() * (spaces.length));
 				setBomb(randomX, randomY);
 			}
+			
+			for (int i = 0; i < hidden.length; i++) {
+				for (int j = 0; j < hidden[i].length; j++) {
+					hidden[i][j] = true;
+				}
+			}
+		
 		}
+		//}
 		numBombs = numMines;
 		numFound = 0;
 		numFlagged = 0;

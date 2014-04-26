@@ -112,12 +112,14 @@ public class MineApplet extends Applet implements MouseListener {
 					}
 				} else if (board.getSpace(j, i) == -1) { // uncovered bomb
 					bufferGraphics.setColor(Color.RED);
+					/*
 					if(Math.random() > .8) {
 						bufferGraphics.setColor(Color.CYAN);
 					}
 					if(Math.random() > .9) {
 						bufferGraphics.setColor(Color.MAGENTA);
 					}
+					*/
 					bufferGraphics.fillRect(j * scale, i * scale, scale, scale);
 				} else {
 					bufferGraphics.setColor(Color.GRAY); // uncovered non bomb
@@ -228,7 +230,7 @@ public class MineApplet extends Applet implements MouseListener {
 
 		if (isClickable()) {
 			double rnd = Math.random();
-			if (arg0.getButton() == MouseEvent.BUTTON1 && rnd >= .15) {
+			if (arg0.getButton() == MouseEvent.BUTTON1) {
 				// Bomb is encountered
 				if (clicked(x, y, true)) {
 					mainGUI.endPlayerOne(false);
@@ -285,8 +287,7 @@ public class MineApplet extends Applet implements MouseListener {
 	public Runnable timeThread = new Runnable() {
 		public void run() {
 			while (true) {
-				if (System.currentTimeMillis() - 1000 > startTime + 1000
-						* secondsPassed) {
+				if (System.currentTimeMillis() - 1000 > startTime * secondsPassed) {
 					secondsPassed++;
 					updateImage();
 					repaint();

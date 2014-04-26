@@ -63,13 +63,13 @@ public class MainGUI extends JFrame {
 		menu.add(newGame);
 		menu.add(connectToPlayer);
 		menuBar.add(menu);
-		connectToPlayer.addActionListener(new ActionListener() {
+		newGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				newGame();
 
 			}
 		});
-		newGame.addActionListener(new ActionListener() {
+		connectToPlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				connectToPlayer();
 			}
