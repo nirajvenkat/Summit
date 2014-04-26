@@ -22,7 +22,7 @@ public class SummitHighScores extends JFrame implements ActionListener
 		
 		//Load background image
 		setLayout(new BorderLayout());
-		String background_path = System.getProperty("user.dir") + "/src/game/images/highscores.png";
+		String background_path = System.getProperty("user.dir") + "/res/images/highscores.png";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 		setLayout(new FlowLayout());
 		

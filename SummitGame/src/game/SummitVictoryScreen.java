@@ -42,8 +42,8 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 		
 		//Load background image
 		setLayout(new BorderLayout());
-		String background_path = System.getProperty("user.dir") + "/src/game/images/highscores.png";
-		String winner_path = System.getProperty("user.dir") + "/src/game/images/winner.png";
+		String background_path = System.getProperty("user.dir") + "/res/images/highscores.png";
+		String winner_path = System.getProperty("user.dir") + "/res/images/winner.png";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 		setLayout(new BorderLayout());
 		
@@ -120,7 +120,7 @@ public class SummitVictoryScreen extends JFrame implements ActionListener
 			int resp = in.readInt();
 			if(resp == 1) //If 1 is returned from server, it's a high score
 			{
-				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/victory.wav")); //YAY VICTORY SOUND
+				WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/victory.wav")); //YAY VICTORY SOUND
 				
 				//Change JFrame and allow user to enter a name
 				setSize(700, 275);

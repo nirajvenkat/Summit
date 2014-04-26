@@ -58,8 +58,8 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 		
 		//Set background image from file
 		setLayout(new BorderLayout());
-		String background_path = System.getProperty("user.dir") + "/src/game/images/menu.jpg";
-		String logo_path = System.getProperty("user.dir") + "/src/game/images/menu_logo.jpg";
+		String background_path = System.getProperty("user.dir") + "/res/images/menu.jpg";
+		String logo_path = System.getProperty("user.dir") + "/res/images/menu_logo.jpg";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 	    setLayout(new FlowLayout());
 	    
@@ -68,7 +68,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	    
 	    try //Play Sandstorm!
 	    {
-	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/src/game/media/sandstorm.wav").getAbsoluteFile());
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/res/media/sandstorm.wav").getAbsoluteFile());
 	        clip = AudioSystem.getClip();
 	        clip.open(audioInputStream);
 	        clip.start();
@@ -279,7 +279,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	public void mousePressed(MouseEvent e) 
 	{
 		//Play sound when user clicks on a menu item
-		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/down.wav"));
+		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/down.wav"));
 		
 		//Change color when user clicks on menu item
 		if(e.getSource().equals(start_game))
@@ -391,7 +391,7 @@ public class SummitMenu extends JFrame implements ActionListener, MouseListener,
 	public void mouseEntered(MouseEvent e) 
 	{
 		//Change color when user mouses over menu item
-		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/src/game/media/over.wav"));
+		WorldBuilder.playSound(new File(System.getProperty("user.dir") + "/res/media/over.wav"));
 		if(e.getSource().equals(start_game))
 		{
 			start_game.setForeground(MOUSE_OVER_COLOR);

@@ -26,7 +26,7 @@ public class SummitSettings extends JFrame implements ActionListener
 		
 		//Load background image "setting.png" from the res folder
 		setLayout(new BorderLayout());
-		String background_path = System.getProperty("user.dir") + "/src/game/images/setting.png";
+		String background_path = System.getProperty("user.dir") + "/res/images/setting.png";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 		setLayout(new BorderLayout());
 		JPanel screenSizePanel = new JPanel(new GridLayout(2,2,5,5));

@@ -19,9 +19,9 @@ public class SummitInstructions extends JFrame implements ActionListener
 		
 		//Load background
 		setLayout(new BorderLayout());
-		String background_path = System.getProperty("user.dir") + "/src/game/images/instructions.jpg";
-		String wsad_path = System.getProperty("user.dir") + "/src/game/images/wsad_keys.png";
-		String arrow_path = System.getProperty("user.dir") + "/src/game/images/arrow_keys.png";
+		String background_path = System.getProperty("user.dir") + "/res/images/instructions.jpg";
+		String wsad_path = System.getProperty("user.dir") + "/res/images/wsad_keys.png";
+		String arrow_path = System.getProperty("user.dir") + "/res/images/arrow_keys.png";
 		setContentPane(new JLabel(new ImageIcon(background_path)));
 		setLayout(new BorderLayout());
 		
