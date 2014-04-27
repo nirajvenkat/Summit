@@ -88,12 +88,16 @@ public class MainGUI extends JFrame {
 		add(mainPanel, BorderLayout.CENTER);
 		setJMenuBar(menuBar);
 
+		//RANDOM LOCATION FOR JFRAME?
 		double x = Math.random() * (500 - 50);
 		double y = Math.random() * (500 - 50);
 		int x1 = (int) x;
 		int y1 = (int) y;
 		setLocation(x1, y1);
 		System.out.println(x1 + " " + y1);
+		/////////////////////////////////
+
+
 		setTitle("Competitive Minesweeper");
 		pack();
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -214,26 +218,20 @@ public class MainGUI extends JFrame {
 				p1Win = true;
 				p1Lose = false;
 
-				boolean screwup = true;
-				int i = 1 + (int) Math.random() * (2 - 1);
-				if (i == 1) {
-					screwup = false;
-				}
-				p2Win = screwup;
-				p2Lose = !screwup;
+				
 				if (p2Win) {
 					JOptionPane
 							.showMessageDialog(
 									new javax.swing.JFrame(),
-									"You lost!",
 									"You cleared the board, but your opponent was faster.",
+									"You lost!",
 									JOptionPane.WARNING_MESSAGE);
 				} else if (p2Lose) {
 					JOptionPane
 							.showMessageDialog(
 									new javax.swing.JFrame(),
-									"You won!",
 									"You cleared the board and your opponent failed their board.",
+									"You won!",
 									JOptionPane.WARNING_MESSAGE);
 				}
 			} else {

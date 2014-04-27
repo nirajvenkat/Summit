@@ -79,6 +79,7 @@ public class ClientMain extends JFrame {
 
 		pack();
 		addWindowListener(windowListener);
+		setResizable(false);
 		setVisible(true);
 	}
 
@@ -130,13 +131,13 @@ public class ClientMain extends JFrame {
 
 		@Override
 		public void windowDeactivated(WindowEvent arg0) {
-			chatArea.setText("");
+			//chatArea.setText("");
 		}
 
 		@Override
 		public void windowDeiconified(WindowEvent arg0) {
 			// edit made here
-			setVisible(false);
+			//setVisible(false);
 			// chatArea.setText("");
 
 		}
@@ -187,8 +188,14 @@ public class ClientMain extends JFrame {
 					.showInputDialog("Invalid characters. Enter (or create) Username");
 		}
 		while (password.length() <= 0) {
-			password = JOptionPane
-					.showInputDialog("Enter (or create) Password");
+			JPasswordField pf = new JPasswordField();
+
+			int okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter (or create) Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+			if (okCxl == JOptionPane.OK_OPTION) {
+			  password = (pf.getPassword());
+			}
+
 		}
 		int pwd = password.hashCode();
 		object = this;
@@ -294,11 +301,7 @@ public class ClientMain extends JFrame {
 			if (chatArea != null) {
 				chatArea.append("\n" + str);
 				setVisible(true);
-				// edit made here
-				int i = 1 + (int) (Math.random() * (25 - 1));
-				if (i == 13) {
-					setVisible(false);
-				}
+				
 			}
 		}
 	}

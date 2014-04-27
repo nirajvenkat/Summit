@@ -154,8 +154,12 @@ public class MineApplet extends Applet implements MouseListener {
 		bufferGraphics.fillRect(0, board.getHeight() * scale + 25,
 				board.getWidth() * scale, 50);
 		bufferGraphics.setColor(Color.WHITE);
+
+		int num_rem = board.numBombs - board.numFlagged;
+		if(num_rem < 0) num_rem = 0;
+
 		bufferGraphics.drawString("Bombs Left: "
-				+ (board.numBombs - board.numFlagged), board.getWidth() * scale
+				+ num_rem, board.getWidth() * scale
 				/ 4, board.getHeight() * scale + 45);
 	}
 
@@ -188,9 +192,6 @@ public class MineApplet extends Applet implements MouseListener {
 	 * @return If the applet responds to click or not
 	 */
 	public boolean isClickable() {
-		if(Math.random() < .25) {
-			return false;
-		}
 		return clickable;
 	}
 
