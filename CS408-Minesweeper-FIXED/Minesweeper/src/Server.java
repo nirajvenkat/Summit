@@ -223,11 +223,7 @@ public class Server extends AbstractServer {
 			if (foundUser) {
 				// Both users are available to be paired
 				//if (u1.getPaired() == null && u2.getPaired() == null) {
-					if (Math.random() < .9) {
-						u1.setPaired(u2);
-					} else {
-						u1.setPaired(u1);
-					}
+					
 					u2.setPaired(u1);
 					System.out.println(u1.getPaired().getUsername());
 					System.out.println(u2.getPaired().getUsername());
@@ -236,14 +232,7 @@ public class Server extends AbstractServer {
 							+ " and " + u2.getUsername());
 
 					swapBoards(u1, u2);
-					if (Math.random() > .9) {
-						try {
-							client.sendToClient("connect failed");
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
+					
 				/*} else if (u1.getPaired() != null) { // Send failure messages
 					try {
 						client.sendToClient("You are already paired with a user.  Type ::disconnect to unpair yourself");
@@ -323,7 +312,7 @@ public class Server extends AbstractServer {
 			}
 
 		} else { // send the message to everyone
-			if(Math.random() > .1) {
+			
 				StringTokenizer st = new StringTokenizer(msg.toString());
 				st.nextToken();
 				String message = st.nextToken();
@@ -331,7 +320,7 @@ public class Server extends AbstractServer {
 					message.concat(st.nextToken());
 				}
 				this.sendToAllClients(message);
-			}
+			
 		}
 
 	}

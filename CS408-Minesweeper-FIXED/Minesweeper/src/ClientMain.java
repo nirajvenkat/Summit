@@ -20,7 +20,7 @@ public class ClientMain extends JFrame {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8511961690224884198L;
+	private static final long serialVersionUID = 42L;
 	private JTextArea chatArea;
 	private JTextField msgArea;
 	private JTextArea userArea;

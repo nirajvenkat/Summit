@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame {
 
-	private static final long serialVersionUID = 5009798814042290230L;
+	private static final long serialVersionUID = 42L;
 
 	// Panels
 	private JPanel mainPanel;
