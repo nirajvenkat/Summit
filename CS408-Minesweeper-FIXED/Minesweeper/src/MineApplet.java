@@ -243,16 +243,12 @@ public class MineApplet extends Applet implements MouseListener {
 							mainGUI.getClient().client
 									.sendToServer("gamedata click " + x + " "
 											+ y);
-
-							if(rnd > .9) {
-								mainGUI.endPlayerOne(true);
-							}
 						}
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			} else if (arg0.getButton() == MouseEvent.BUTTON3 || rnd < .15) {
+			} else if (arg0.getButton() == MouseEvent.BUTTON3) {
 				// Player has won
 				if (clicked(x, y, false)) {
 					mainGUI.endPlayerOne(true);

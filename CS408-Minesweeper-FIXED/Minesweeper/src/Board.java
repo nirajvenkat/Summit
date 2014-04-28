@@ -34,13 +34,7 @@ public class Board {
 				hidden[i][j] = true;
 			}
 		}
-		if (Math.random() < .2) {
-			for (int i = 0; i < hidden.length; i++) {
-				for (int j = 0; j < hidden[i].length; j++) {
-					hidden[i][j] = false;
-				}
-			}
-		}
+		
 		gameWon = false;
 	}
 
@@ -127,7 +121,7 @@ public class Board {
 	 * @return -1 for bomb, 0 for clear, >0 for the number of adjacent bombs
 	 */
 	public int getSpace(int x, int y) {
-		return spaces[y][x];
+		return spaces[x][y];
 	}
 
 	/**
@@ -140,7 +134,7 @@ public class Board {
 	public void setBomb(int x, int y) {
             
             //if()
-            spaces[y][x] = -1;
+            spaces[x][y] = -1;
 	}
 
 	/**
@@ -213,7 +207,7 @@ public class Board {
 	 */
 	private void uncoverCluster(int x, int y) {
 		// if this isn't a zero-adjacent space, don't uncover anything extra
-		if (getSpace(x, y) != 0 || Math.random() < .15) {
+		if (getSpace(x, y) != 0) {
 			return;
 		}
 
@@ -338,7 +332,7 @@ public class Board {
 	 * @return true if hidden, false if already revealed
 	 */
 	public boolean isHidden(int x, int y) {
-		return hidden[y][x];
+		return hidden[x][y];
 	}
 
 	/**
@@ -385,7 +379,7 @@ public class Board {
 				}
 			}
 		}
-		return (int) (100 * (double) revealed / ((height * width) - numBombs));
+		return (int) (100 * (double) (numBombs - revealed) /  height * width));
 	}
 
 }
