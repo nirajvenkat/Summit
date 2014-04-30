@@ -144,58 +144,58 @@ public class Board {
 	public void setAdjNums() {
 		for (int i = 0; i < spaces.length; i++) {
 			for (int j = 0; j < spaces[i].length; j++) {
-				if (spaces[j][i] != -1) {
+				if (spaces[i][j] != -1) {
 					int count = -1;
 					try {
-						if (spaces[j - 1][i - 1] == -1) {
+						if (spaces[i - 1][j - 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j][i - 1] == -1) {
+						if (spaces[i - 1][j] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j + 1][i - 1] == -1) {
+						if (spaces[i - 1][j + 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j - 1][i] == -1) {
+						if (spaces[i][j - 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j + 1][i] == -1) {
+						if (spaces[i][j + 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j - 1][i + 1] == -1) {
+						if (spaces[i + 1][j - 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j][i + 1] == -1) {
+						if (spaces[i + 1][j] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j + 1][i + 1] == -1) {
+						if (spaces[i + 1][j + 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 
-					spaces[j][i] = count;
+					spaces[i][j] = count;
 				}
 			}
 		}
