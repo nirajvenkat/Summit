@@ -183,7 +183,7 @@ public class ClientMain extends JFrame {
 	private void enterCredentials() {
 		username = JOptionPane.showInputDialog("Enter (or create) Username");
 		password = "";
-		while (username.contains("%") || username.contains(" ")) {
+		while (username == null || username.isEmpty() || username.contains("%") || username.contains(" ")) {
 			username = JOptionPane
 					.showInputDialog("Invalid characters. Enter (or create) Username");
 		}
@@ -218,14 +218,12 @@ public class ClientMain extends JFrame {
 			StringTokenizer st = new StringTokenizer(str);
 			st.nextToken();
 			String userList = "";
-			// int count = 0;
 
 			while (st.hasMoreTokens()) {
-				// if(count <= 2){
-				userList += st.nextToken();
-				userList += "\n";
-				// count++;
-				// }
+				
+				userList.append(st.nextToken() + "\n");
+
+	
 			}
 			if (userArea != null) {
 				userArea.setText(userList);

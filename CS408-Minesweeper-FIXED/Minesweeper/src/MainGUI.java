@@ -138,7 +138,7 @@ public class MainGUI extends JFrame {
 		add(secondPanel, BorderLayout.EAST);
 
 		secondApplet.initGraphics();
-
+		secondApplet.setVisible(true);
 		pack();
 	}
 
@@ -147,6 +147,7 @@ public class MainGUI extends JFrame {
 	 */
 	public void removeSecondPlayer() {
 		if (secondPanel != null) {
+			secondApplet.setVisible(false);
 			remove(secondPanel);
 			pack();
 		}

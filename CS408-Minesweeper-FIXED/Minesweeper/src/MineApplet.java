@@ -137,11 +137,11 @@ public class MineApplet extends Applet implements MouseListener {
 		bufferGraphics.setColor(Color.BLACK);
 		// Paint the gridlines
 		for (int i = 0; i < board.getHeight(); i++) {
-			bufferGraphics.drawLine(0, i * scale, board.getWidth() * scale, i
+			bufferGraphics.drawLine(0, i * scale, board.getHeight() * scale, i
 					* scale);
 		}
 		for (int i = 0; i < board.getWidth(); i++) {
-			bufferGraphics.drawLine(i * scale, 0, i * scale, board.getHeight()
+			bufferGraphics.drawLine(i * scale, 0, i * scale, board.getWidth()
 					* scale - 1);
 		}
 		bufferGraphics.drawLine(0, board.getHeight() * scale - 1,

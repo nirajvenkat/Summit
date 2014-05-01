@@ -4,7 +4,7 @@ public class ServerMain {
 
 	public static void main(String[] args) {
 		int port = 8043;
-		if(args.length < 0) {
+		if(args.length > 0) {
 			try {
 				port = Integer.parseInt(args[0]);
 			} catch(Exception e) {}

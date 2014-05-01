@@ -72,7 +72,6 @@ public class Board {
 	public boolean leftClick(int x, int y) {
 		// System.out.println("Clicked: (" + x + ", " + y + ")");
 		if (getSpace(x, y) == -1) {
-			myapplet.setClickable(false);
 			return true;
 		}
 		hidden[y][x] = false;
@@ -145,7 +144,7 @@ public class Board {
 		for (int i = 0; i < spaces.length; i++) {
 			for (int j = 0; j < spaces[i].length; j++) {
 				if (spaces[j][i] != -1) {
-					int count = -1;
+					int count = 0;
 					try {
 						if (spaces[j - 1][i - 1] == -1) {
 							count++;
