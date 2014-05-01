@@ -74,7 +74,7 @@ public class Board {
 		if (getSpace(x, y) == -1) {
 			return true;
 		}
-		hidden[y][x] = false;
+		hidden[x][y] = false;
 		uncoverCluster(x, y);
 		return false;
 	}
@@ -89,15 +89,15 @@ public class Board {
 	 * @return True if the game was won, false if game continues
 	 */
 	public boolean rightClick(int x, int y) {
-		hidden[y][x] = true;
+		hidden[x][y] = true;
 		// add a flag to this space
-		if (myapplet.marks[y][x] == 'q') {
-			myapplet.marks[y][x] = 'e'; // question -> empty
-		} else if (myapplet.marks[y][x] == 'f') {
-			myapplet.marks[y][x] = 'q'; // flag -> question
+		if (myapplet.marks[x][y] == 'q') {
+			myapplet.marks[x][y] = 'e'; // question -> empty
+		} else if (myapplet.marks[x][y] == 'f') {
+			myapplet.marks[x][y] = 'q'; // flag -> question
 			numFlagged--;
 		} else {
-			myapplet.marks[y][x] = 'f'; // empty -> flag
+			myapplet.marks[x][y] = 'f'; // empty -> flag
 			numFlagged++;
 			if (getSpace(x, y) == -1) {
 				numFound++;
@@ -143,58 +143,63 @@ public class Board {
 	public void setAdjNums() {
 		for (int i = 0; i < spaces.length; i++) {
 			for (int j = 0; j < spaces[i].length; j++) {
+<<<<<<< HEAD
 				if (spaces[j][i] != -1) {
 					int count = 0;
+=======
+				if (spaces[i][j] != -1) {
+					int count = -1;
+>>>>>>> FETCH_HEAD
 					try {
-						if (spaces[j - 1][i - 1] == -1) {
+						if (spaces[i - 1][j - 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j][i - 1] == -1) {
+						if (spaces[i - 1][j] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j + 1][i - 1] == -1) {
+						if (spaces[i - 1][j + 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j - 1][i] == -1) {
+						if (spaces[i][j - 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j + 1][i] == -1) {
+						if (spaces[i][j + 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j - 1][i + 1] == -1) {
+						if (spaces[i + 1][j - 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j][i + 1] == -1) {
+						if (spaces[i + 1][j] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 					try {
-						if (spaces[j + 1][i + 1] == -1) {
+						if (spaces[i + 1][j + 1] == -1) {
 							count++;
 						}
 					} catch (IndexOutOfBoundsException e) { /* ignore */
 					}
 
-					spaces[j][i] = count;
+					spaces[i][j] = count;
 				}
 			}
 		}
@@ -212,7 +217,7 @@ public class Board {
 
 		// create a queue, and add the initially clicked space
 		Queue<int[]> q = new LinkedList<int[]>();
-		int[] first = { y, x };
+		int[] first = { x, y };
 		q.add(first);
 
 		// create a linked list of every space that has been added to the queue
