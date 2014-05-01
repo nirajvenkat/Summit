@@ -100,7 +100,6 @@ public class MainGUI extends JFrame {
 
 		setTitle("Competitive Minesweeper");
 		pack();
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setVisible(true);
 
 		mineApplet.initGraphics();

@@ -75,7 +75,7 @@ public class Board {
 			myapplet.setClickable(false);
 			return true;
 		}
-		hidden[y][x] = false;
+		hidden[x][y] = false;
 		uncoverCluster(x, y);
 		return false;
 	}
@@ -90,15 +90,15 @@ public class Board {
 	 * @return True if the game was won, false if game continues
 	 */
 	public boolean rightClick(int x, int y) {
-		hidden[y][x] = true;
+		hidden[x][y] = true;
 		// add a flag to this space
-		if (myapplet.marks[y][x] == 'q') {
-			myapplet.marks[y][x] = 'e'; // question -> empty
-		} else if (myapplet.marks[y][x] == 'f') {
-			myapplet.marks[y][x] = 'q'; // flag -> question
+		if (myapplet.marks[x][y] == 'q') {
+			myapplet.marks[x][y] = 'e'; // question -> empty
+		} else if (myapplet.marks[x][y] == 'f') {
+			myapplet.marks[x][y] = 'q'; // flag -> question
 			numFlagged--;
 		} else {
-			myapplet.marks[y][x] = 'f'; // empty -> flag
+			myapplet.marks[x][y] = 'f'; // empty -> flag
 			numFlagged++;
 			if (getSpace(x, y) == -1) {
 				numFound++;
@@ -213,7 +213,7 @@ public class Board {
 
 		// create a queue, and add the initially clicked space
 		Queue<int[]> q = new LinkedList<int[]>();
-		int[] first = { y, x };
+		int[] first = { x, y };
 		q.add(first);
 
 		// create a linked list of every space that has been added to the queue
